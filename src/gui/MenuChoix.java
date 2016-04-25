@@ -1,18 +1,17 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import main.Main;
 import metier.Joueur;
 
 public class MenuChoix extends JPanel
@@ -25,6 +24,7 @@ public class MenuChoix extends JPanel
 	private JButton ajouterQuizz;
 	private JButton modifierQuizz;
 	private JButton resultats;
+	private JButton jouerQuizz;
 	
 	public MenuChoix(Joueur j)
 	{
@@ -68,11 +68,52 @@ public class MenuChoix extends JPanel
 		else
 		{
 			add(title, gbc);
+			jouerQuizz = new JButton("Faire un quizz");
+			gbc.gridy += 1;
+			gbc.insets = new Insets(2, 0, 2, 0);
+			add(jouerQuizz, gbc);
+		}
+		initListeners();
+	}
+	
+	private void initListeners()
+	{
+		for(Component c : getComponents())
+		{
+			if(c instanceof JButton)
+				c.addMouseListener(new CustomMouseListener());
 		}
 	}
 	
-	private class AdminMouseListener extends MouseAdapter
+	private class CustomMouseListener extends MouseAdapter
 	{
-		
+		public void mouseClicked(MouseEvent e)
+		{
+			JButton src = (JButton)e.getSource();
+			if(src == ajouterQues)
+			{
+				
+			}
+			else if(src == modifierQues)
+			{
+				
+			}
+			else if(src == ajouterQuizz)
+			{
+				
+			}
+			else if(src == modifierQuizz)
+			{
+				
+			}
+			else if(src == resultats)
+			{
+				
+			}
+			else if(src == jouerQuizz)
+			{
+				System.out.println("Test");
+			}
+		}
 	}
 }

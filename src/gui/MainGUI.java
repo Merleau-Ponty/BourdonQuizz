@@ -41,6 +41,7 @@ public class MainGUI extends JFrame
 		menu.add(new JMenuItem("S'inscrire"));
 		aide.add(new JMenuItem("A propos"));
 		utilisateur.add(userInfo);
+		barre.setBorderPainted(false);
 		barre.add(menu);
 		barre.add(utilisateur);
 		barre.add(aide);
@@ -90,7 +91,12 @@ public class MainGUI extends JFrame
 	
 	private void changeConnectedStateMember()
 	{
-		// Modification du menu pour les membres
+		menu.removeAll();
+		menu.add(new JMenuItem("Faire un quizz"));
+		menu.addSeparator();
+		menu.add(new JMenuItem("Se déconnecter"));
+		initListeners();
+		applyChanges();
 	}
 	
 	private void changeConnectedStateDisconnected()
@@ -103,7 +109,6 @@ public class MainGUI extends JFrame
 		MenuChoix.joueur = null;
 		changePanel(new Connexion());
 		initListeners();
-		//applyChanges();
 	}
 	
 	private void modifyPlayerInfo(String login)
