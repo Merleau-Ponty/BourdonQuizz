@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,17 +36,16 @@ public class Inscription extends JPanel
 	private JTextField mdp;
 	private JButton valider;
 	private boolean displayErr = false;
-	
+
 	private HashMap<String, JTextField> components = new HashMap<String, JTextField>();
 
 	public Inscription()
 	{
-		initialize();
+		initGUI();
 	}
 
-	private void initialize()
+	private void initGUI()
 	{
-		setBounds(100, 100, 800, 451);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[15];
 		gridBagLayout.rowHeights = new int[13];
@@ -58,7 +58,7 @@ public class Inscription extends JPanel
 		JLabel lblPageDinscription = new JLabel("Inscription");
 		lblPageDinscription.setFont(new Font("Roboto", Font.PLAIN, 40));
 		GridBagConstraints gbc_lblPageDinscription = new GridBagConstraints();
-		gbc_lblPageDinscription.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPageDinscription.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPageDinscription.gridx = 8;
 		gbc_lblPageDinscription.gridy = 0;
 		add(lblPageDinscription, gbc_lblPageDinscription);
@@ -113,7 +113,7 @@ public class Inscription extends JPanel
 
 		mdp = new JPasswordField("Mot de passe");
 		GridBagConstraints gbc_txtMotDePasse = new GridBagConstraints();
-		gbc_txtMotDePasse.insets = new Insets(0, 0, 5, 5);
+		gbc_txtMotDePasse.insets = new Insets(0, 0, 20, 5);
 		gbc_txtMotDePasse.gridx = 8;
 		gbc_txtMotDePasse.gridy = 8;
 		add(mdp, gbc_txtMotDePasse);
@@ -121,12 +121,13 @@ public class Inscription extends JPanel
 
 		valider = new JButton("Valider");
 		GridBagConstraints gbc_btnValider = new GridBagConstraints();
-		gbc_btnValider.insets = new Insets(0, 0, 5, 5);
+		// gbc_btnValider.insets = new Insets(0, 0, 0, 0);
 		gbc_btnValider.gridx = 8;
 		gbc_btnValider.gridy = 11;
 		add(valider, gbc_btnValider);
 		valider.addMouseListener(new CustomMouseListener());
-		
+
+		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
 		initFields();
 		this.addMouseListener(new MouseAdapter()
 		{
@@ -136,29 +137,29 @@ public class Inscription extends JPanel
 			}
 		});
 	}
-	
+
 	public void initFields()
 	{
-		for(Component c : this.getComponents())
+		for (Component c : this.getComponents())
 		{
-			if(c instanceof JTextField)
+			if (c instanceof JTextField)
 			{
 				c.setForeground(Color.GRAY);
 				c.addFocusListener(new CustomFocusListener());
-				if(c instanceof JPasswordField)
+				if (c instanceof JPasswordField)
 				{
-					((JPasswordField) c).setEchoChar((char)0);
-					components.put((String.valueOf(((JPasswordField)c).getPassword())), (JPasswordField)c);
+					((JPasswordField) c).setEchoChar((char) 0);
+					components.put((String.valueOf(((JPasswordField) c).getPassword())), (JPasswordField) c);
 				}
 				else
-					components.put(((JTextField)c).getText(), (JTextField)c);
-			}	
+					components.put(((JTextField) c).getText(), (JTextField) c);
+			}
 		}
 	}
-	
+
 	public void displayError()
 	{
-		if(!displayErr)
+		if (!displayErr)
 		{
 			JLabel err = new JLabel("Veuillez remplir correctement tous les champs");
 			err.setForeground(Color.RED);
@@ -168,66 +169,66 @@ public class Inscription extends JPanel
 			gbc_err.gridy = 12;
 			add(err, gbc_err);
 			displayErr = true;
-			revalidate();
-			repaint();
+			((MainGUI) SwingUtilities.getWindowAncestor(this)).applyChanges();
 		}
 	}
-	
+
 	// Gestionnaires d'évènements
 	private class CustomMouseListener extends MouseAdapter
 	{
 		public void mouseClicked(MouseEvent e)
 		{
-			if(e.getSource() == valider)
+			if (e.getSource() == valider)
 			{
 				boolean res = true;
 				ArrayList<String> ins = new ArrayList<String>();
-				for(Component c : Inscription.this.getComponents())
+				for (Component c : Inscription.this.getComponents())
 				{
-					if(c instanceof JTextField)
+					if (c instanceof JTextField)
 					{
-						JTextField field = (JTextField)c;
+						JTextField field = (JTextField) c;
 						ins.add(field.getText());
-						for(Entry<String, JTextField> entry : components.entrySet())
+						for (Entry<String, JTextField> entry : components.entrySet())
 						{
-							if(field == entry.getValue())
+							if (field == entry.getValue())
 							{
-								if(field.getText().equals(entry.getKey()) || field.getText().equals(""))
+								if (field.getText().equals(entry.getKey()) || field.getText().equals(""))
 									res = false;
 							}
 						}
 					}
 				}
-				if(!res)
+				if (!res)
 					Inscription.this.displayError();
 				else
 				{
 					DAOFactory f = DAOFactory.getInstance();
 					JoueurDAO jdao = f.getJoueur();
-					((MainGUI)SwingUtilities.getWindowAncestor(Inscription.this)).changeToMenuChoix(jdao.inscrireJoueur(ins), jdao.selecJoueurParLogin(login.getText()));
+					((MainGUI) SwingUtilities.getWindowAncestor(Inscription.this))
+							.changeToMenuChoix(jdao.inscrireJoueur(ins), jdao.selecJoueurParLogin(login.getText()));
 				}
 			}
 		}
 	}
-	
+
 	private class CustomFocusListener extends FocusAdapter
-	{	
+	{
 		private String valeur;
-		
+
 		public void focusGained(FocusEvent e)
 		{
-			if(components.containsValue((JTextField)e.getSource()))
+			if (components.containsValue((JTextField) e.getSource()))
 			{
-				JTextField field = (JTextField)e.getSource();
-				for(Entry<String, JTextField> entry : components.entrySet())
+				JTextField field = (JTextField) e.getSource();
+				for (Entry<String, JTextField> entry : components.entrySet())
 				{
-					if(field == entry.getValue())
+					if (field == entry.getValue())
 					{
-						if(field.getText().equals(entry.getKey()))
+						if (field.getText().equals(entry.getKey()))
 						{
 							valeur = entry.getKey();
-							if(field instanceof JPasswordField)
-								((JPasswordField)field).setEchoChar('*');
+							if (field instanceof JPasswordField)
+								((JPasswordField) field).setEchoChar('*');
 							field.setText("");
 							field.setForeground(Color.BLACK);
 						}
@@ -235,16 +236,16 @@ public class Inscription extends JPanel
 				}
 			}
 		}
-		
+
 		public void focusLost(FocusEvent e)
 		{
-			JTextField j = (JTextField)e.getSource();
-			if(j.getText().equals(""))
+			JTextField j = (JTextField) e.getSource();
+			if (j.getText().equals(""))
 			{
 				j.setText(valeur);
 				j.setForeground(Color.GRAY);
-				if(j instanceof JPasswordField)
-					((JPasswordField)j).setEchoChar((char)0);
+				if (j instanceof JPasswordField)
+					((JPasswordField) j).setEchoChar((char) 0);
 			}
 		}
 	}

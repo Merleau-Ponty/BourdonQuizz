@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -8,21 +7,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.xml.soap.Text;
 
 import dao.DAOFactory;
 import dao.JoueurDAO;
@@ -37,12 +34,11 @@ public class Connexion extends JPanel
 
 	public Connexion()
 	{
-		init();
+		initGUI();
 	}
 
-	private void init()
+	private void initGUI()
 	{
-		setBounds(100, 100, 800, 450);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[14];
 		gridBagLayout.rowHeights = new int[14];
@@ -51,10 +47,9 @@ public class Connexion extends JPanel
 		setLayout(gridBagLayout);
 
 		JLabel lblPageDeConnexion = new JLabel("Page de connexion");
-		lblPageDeConnexion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPageDeConnexion.setFont(new Font("Roboto", Font.PLAIN, 40));
 		GridBagConstraints gbc_lblPageDeConnexion = new GridBagConstraints();
-		gbc_lblPageDeConnexion.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPageDeConnexion.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPageDeConnexion.gridx = 4;
 		gbc_lblPageDeConnexion.gridy = 0;
 		add(lblPageDeConnexion, gbc_lblPageDeConnexion);
@@ -84,7 +79,7 @@ public class Connexion extends JPanel
 
 		pasInscrit = new JButton("Pas encore inscrit ?");
 		GridBagConstraints gbc_pasInscrit = new GridBagConstraints();
-		gbc_pasInscrit.insets = new Insets(0, 0, 5, 5);
+		gbc_pasInscrit.insets = new Insets(0, 0, 20, 5);
 		gbc_pasInscrit.gridx = 4;
 		gbc_pasInscrit.gridy = 9;
 		add(pasInscrit, gbc_pasInscrit);
@@ -96,6 +91,8 @@ public class Connexion extends JPanel
 		gbc_seConnecter.gridy = 12;
 		add(connexion, gbc_seConnecter);
 		connexion.addMouseListener(new CustomMouseListener());
+		
+		setBorder(BorderFactory.createEmptyBorder(0,100,5,100));
 		
 		// Perte de focus
 		this.addMouseListener(new MouseAdapter()
@@ -119,8 +116,7 @@ public class Connexion extends JPanel
 			gbc_err.gridy = 13;
 			add(err, gbc_err);
 			displayErr = true;
-			revalidate();
-			repaint();
+			((MainGUI)SwingUtilities.getWindowAncestor(this)).applyChanges();
 		}
 	}
 		

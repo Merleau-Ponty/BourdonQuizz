@@ -8,9 +8,11 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import metier.Joueur;
 
@@ -29,10 +31,10 @@ public class MenuChoix extends JPanel
 	public MenuChoix(Joueur j)
 	{
 		joueur = j;
-		init();
+		initGUI();
 	}
 
-	private void init()
+	private void initGUI()
 	{
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -63,6 +65,7 @@ public class MenuChoix extends JPanel
 			add(modifierQuizz, gbc);
 			resultats = new JButton("Visualiser les résultats");
 			gbc.gridy += 1;
+			gbc.insets = new Insets(2, 0, 12, 0);
 			add(resultats, gbc);
 		}
 		else
@@ -74,6 +77,7 @@ public class MenuChoix extends JPanel
 			add(jouerQuizz, gbc);
 		}
 		initListeners();
+		setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10));
 	}
 	
 	private void initListeners()
@@ -90,10 +94,9 @@ public class MenuChoix extends JPanel
 		public void mouseClicked(MouseEvent e)
 		{
 			JButton src = (JButton)e.getSource();
+			MainGUI gui = (MainGUI)SwingUtilities.getWindowAncestor(MenuChoix.this);
 			if(src == ajouterQues)
-			{
-				
-			}
+				gui.changePanel(new QuestionGUI(true));
 			else if(src == modifierQues)
 			{
 				
@@ -112,7 +115,7 @@ public class MenuChoix extends JPanel
 			}
 			else if(src == jouerQuizz)
 			{
-				System.out.println("Test");
+				
 			}
 		}
 	}

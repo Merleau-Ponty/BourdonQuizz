@@ -26,12 +26,11 @@ public class MainGUI extends JFrame
 	public MainGUI() 
 	{
 		super("Application code de la route");
-		initMain();
+		initGUI();
 	}
 	
-	private void initMain()
+	private void initGUI()
 	{
-		setSize(800, 600);
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -46,9 +45,12 @@ public class MainGUI extends JFrame
 		barre.add(utilisateur);
 		barre.add(aide);
 		
-		initListeners();
+		initListeners(false);
 		add(new Connexion(), BorderLayout.NORTH);
 		setJMenuBar(barre);
+		setResizable(false);
+		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
@@ -71,6 +73,13 @@ public class MainGUI extends JFrame
 		applyChanges();
 	}
 	
+	public void applyChanges()
+	{
+		revalidate();
+		repaint();
+		pack();
+	}
+	
 	private void changeConnectedStateAdmin()
 	{
 		menu.removeAll();
@@ -80,13 +89,12 @@ public class MainGUI extends JFrame
 		quest.add(new JMenuItem("Ajouter une question"));
 		quest.add(new JMenuItem("Modifier une question"));
 		menu.add(quizz);
-		quizz.add(new JMenuItem("Créer un quizz"));
+		quizz.add(new JMenuItem("Ajouter un quizz"));
 		quizz.add(new JMenuItem("Modifier un quizz"));
 		menu.add(new JMenuItem("Visualiser les résultats"));
 		menu.addSeparator();
 		menu.add(new JMenuItem("Se déconnecter"));
-		initListeners();
-		applyChanges();
+		initListeners(true);
 	}
 	
 	private void changeConnectedStateMember()
@@ -95,8 +103,7 @@ public class MainGUI extends JFrame
 		menu.add(new JMenuItem("Faire un quizz"));
 		menu.addSeparator();
 		menu.add(new JMenuItem("Se déconnecter"));
-		initListeners();
-		applyChanges();
+		initListeners(true);
 	}
 	
 	private void changeConnectedStateDisconnected()
@@ -108,7 +115,7 @@ public class MainGUI extends JFrame
 		userInfo.setEnabled(false);
 		MenuChoix.joueur = null;
 		changePanel(new Connexion());
-		initListeners();
+		initListeners(true);
 	}
 	
 	private void modifyPlayerInfo(String login)
@@ -117,22 +124,36 @@ public class MainGUI extends JFrame
 		userInfo.setText(login);
 	}
 	
-	private void applyChanges()
-	{
-		revalidate();
-		repaint();
-	}
-	
-	private void initListeners()
+	private void initListeners(boolean menuChoix)
 	{
 		for(Component c : barre.getComponents())
 		{
 			if(c instanceof JMenu)
 			{
-				for(Component c2 : ((JMenu)c).getMenuComponents())
+				if(!menuChoix)
 				{
-					if(c2 instanceof JMenuItem)
-						((JMenuItem)c2).addActionListener(new CustomActionListener());
+					for(Component c2 : ((JMenu)c).getMenuComponents())
+					{
+						if(c2 instanceof JMenuItem)
+							((JMenuItem)c2).addActionListener(new CustomActionListener());
+					}
+				}
+				else
+				{
+					if((JMenu)c == menu)
+					{
+						for(Component c2 : ((JMenu)c).getMenuComponents())
+						{
+							if(c2 instanceof JMenu)
+							{
+								for(Component c3 : ((JMenu)c2).getMenuComponents())
+								{
+									if(c3 instanceof JMenuItem)
+										((JMenuItem) c3).addActionListener(new CustomActionListener());
+								}
+							}
+						}
+					}
 				}
 			}
 		}

@@ -36,6 +36,7 @@ public class Joueur
 	public static Joueur genJoueur(ResultSet r) throws SQLException
 	{
 		Joueur j = new Joueur();
+		j.setId_joueur(Integer.parseInt(r.getString("ID_JOUEUR")));
 		j.setEmail(r.getString("EMAIL"));
 		j.setLogin(r.getString("LOGIN"));
 		j.setMot_de_passe(r.getString("MOT_DE_PASSE"));
