@@ -9,8 +9,11 @@ import java.util.Properties;
 
 public class DAOFactory
 {
+	public static String weburl;
+	
 	private static final String FICHIER_PROPERTIES = "dao.local.properties";
 	private static final String PROPERTY_URL = "url";
+	private static final String PROPERTY_WEBURL = "weburl";
 	private static final String PROPERTY_DRIVER = "driver";
 	private static final String PROPERTY_NOM_UTILISATEUR = "nomutilisateur";
 	private static final String PROPERTY_MOT_DE_PASSE = "motdepasse";
@@ -44,6 +47,7 @@ public class DAOFactory
 		{
 			properties.load(fichierProperties);
 			url = properties.getProperty(PROPERTY_URL);
+			weburl = properties.getProperty(PROPERTY_WEBURL);
 			driver = properties.getProperty(PROPERTY_DRIVER);
 			nomUtilisateur = properties.getProperty(PROPERTY_NOM_UTILISATEUR);
 			motDePasse = properties.getProperty(PROPERTY_MOT_DE_PASSE);
@@ -72,5 +76,10 @@ public class DAOFactory
 	public JoueurDAO getJoueur()
 	{
 		return new JoueurDAO(this);
+	}
+	
+	public QuestionDAO getQuestion()
+	{
+		return new QuestionDAO(this);
 	}
 }

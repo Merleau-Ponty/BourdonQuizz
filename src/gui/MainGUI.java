@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.concurrent.BrokenBarrierException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -17,7 +16,6 @@ import metier.Joueur;
 public class MainGUI extends JFrame
 {		
 	private JMenuBar barre = new JMenuBar();
-	
 	private JMenu menu = new JMenu("Menu");
 	private JMenu utilisateur = new JMenu("Utilisateur");
 	private JMenuItem userInfo = new JMenuItem("Non connecté");
@@ -115,7 +113,7 @@ public class MainGUI extends JFrame
 		userInfo.setEnabled(false);
 		MenuChoix.joueur = null;
 		changePanel(new Connexion());
-		initListeners(true);
+		initListeners(false);
 	}
 	
 	private void modifyPlayerInfo(String login)
@@ -135,7 +133,9 @@ public class MainGUI extends JFrame
 					for(Component c2 : ((JMenu)c).getMenuComponents())
 					{
 						if(c2 instanceof JMenuItem)
+						{
 							((JMenuItem)c2).addActionListener(new CustomActionListener());
+						}
 					}
 				}
 				else
@@ -149,7 +149,17 @@ public class MainGUI extends JFrame
 								for(Component c3 : ((JMenu)c2).getMenuComponents())
 								{
 									if(c3 instanceof JMenuItem)
+									{
 										((JMenuItem) c3).addActionListener(new CustomActionListener());
+									}	
+								}
+							}
+							else if(c2 instanceof JMenuItem)
+							{
+								JMenuItem deconnexion = ((JMenuItem)c2);
+								if(c2 == deconnexion)
+								{
+									deconnexion.addActionListener(new CustomActionListener());
 								}
 							}
 						}

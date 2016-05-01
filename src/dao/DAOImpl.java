@@ -24,6 +24,13 @@ public abstract class DAOImpl
 		}
 		return req;
 	}
+	
+	protected static PreparedStatement initialisationRequetePreparee(Connection conn, String sql,
+			boolean returnGeneratedKeys) throws SQLException
+	{
+		PreparedStatement req = conn.prepareStatement(sql, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
+		return req;
+	}
 
 	protected static void close(ResultSet resultSet)
 	{

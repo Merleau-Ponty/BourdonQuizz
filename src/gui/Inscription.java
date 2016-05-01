@@ -27,6 +27,7 @@ import dao.JoueurDAO;
 
 public class Inscription extends JPanel
 {
+	private static final long serialVersionUID = -8090376701336253009L;
 	private JTextField nom;
 	private JTextField prenom;
 	private JTextField telephone;

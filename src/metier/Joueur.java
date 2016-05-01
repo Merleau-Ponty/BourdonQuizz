@@ -3,8 +3,6 @@ package metier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.lang.model.element.NestingKind;
-
 public class Joueur
 {
 	private int id_joueur;
