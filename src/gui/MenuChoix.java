@@ -33,6 +33,11 @@ public class MenuChoix extends JPanel
 		joueur = j;
 		initGUI();
 	}
+	
+	public MenuChoix()
+	{
+		initGUI();
+	}
 
 	private void initGUI()
 	{

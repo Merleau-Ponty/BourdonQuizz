@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.SQLException;
 
+import metier.Question;
+
 public class QuestionDAO extends DAOImpl
 {
 	public QuestionDAO(DAOFactory fac)
@@ -29,20 +31,24 @@ public class QuestionDAO extends DAOImpl
 		{
 			throw new DAOException(e);
 		}
-		finally 
+		finally
 		{
 			close(res, prep, conn);
 		}
 		return countRes;
 	}
 	
-	public void enregistrerQuestion(String libelle, String corrige, String chemImg)
+	public Integer enregistrerQuestion(Question q)
 	{
+		Integer index = null;
 		try
 		{
 			conn = dao.getConnection();
-			prep = initialisationRequetePreparee(conn, "insert into QUESTION(ENONCE, PHOTO, CORRIGE) values (?, ?, ?)", false, libelle, chemImg, corrige);
+			prep = initialisationRequetePreparee(conn, "insert into QUESTION(ENONCE, PHOTO, CORRIGE) values (?, ?, ?)", true, q.getEnonce(), q.getPhoto(), q.getCorrige());
 			prep.executeUpdate();
+			res = prep.getGeneratedKeys();
+			if(res.next())
+				index = res.getInt(1);
 		}
 		catch(SQLException e)
 		{
@@ -52,5 +58,6 @@ public class QuestionDAO extends DAOImpl
 		{
 			close(res, prep, conn);
 		}
+		return index;
 	}
 }

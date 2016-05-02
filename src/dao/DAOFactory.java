@@ -82,4 +82,9 @@ public class DAOFactory
 	{
 		return new QuestionDAO(this);
 	}
+	
+	public PropositionDAO getProposition()
+	{
+		return new PropositionDAO(this);
+	}
 }
