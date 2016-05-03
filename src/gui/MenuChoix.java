@@ -101,10 +101,10 @@ public class MenuChoix extends JPanel
 			JButton src = (JButton)e.getSource();
 			MainGUI gui = (MainGUI)SwingUtilities.getWindowAncestor(MenuChoix.this);
 			if(src == ajouterQues)
-				gui.changePanel(new QuestionGUI(true));
+				gui.changePanel(new GestQuestion());
 			else if(src == modifierQues)
 			{
-				
+				gui.changePanel(new ChoixModifQuestion());
 			}
 			else if(src == ajouterQuizz)
 			{

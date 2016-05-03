@@ -182,6 +182,12 @@ public class MainGUI extends JFrame
 				case "S'inscrire":
 					changePanel(new Inscription());
 					break;
+				case "Ajouter une question":
+					changePanel(new GestQuestion());
+					break;
+				case "Modifier une question":
+					changePanel(new ChoixModifQuestion());
+					break;
 				case "Se déconnecter":
 					changeConnectedStateDisconnected();
 					break;

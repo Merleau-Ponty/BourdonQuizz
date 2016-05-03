@@ -14,8 +14,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -42,8 +40,9 @@ import dao.PropositionDAO;
 import metier.Proposition;
 import metier.Question;
 
-public class QuestionGUI extends JPanel
+public class GestQuestion extends JPanel
 {
+	private JLabel titre;
 	private JTextArea libelle;
 	private JTextArea corrige;
 	private JButton valider;
@@ -51,17 +50,59 @@ public class QuestionGUI extends JPanel
 	private ArrayList<JTextField> props = new ArrayList<JTextField>();
 	private ArrayList<JCheckBox> propsCheck = new ArrayList<JCheckBox>();
 
+	int nbQuestionsModifBase;
 	private Dimension areaPreferredSize;
+	private Dimension textPreferredSize;
+	private int idQModification;
 	private String upload;
 	private boolean isErrorDisplayed = false;
 	private boolean isUploaded = false;
 
-	public QuestionGUI(boolean ajout)
+	public GestQuestion()
 	{
-		initGUI(ajout);
+		initGUI();
 	}
 
-	private void initGUI(boolean ajout)
+	public GestQuestion(int idQ)
+	{
+		initGUI();
+		titre.setText("Modifier une question");
+		DAOFactory dao = DAOFactory.getInstance();
+		valider.setText("Mettre à jour la question et ses réponses");
+		Question q = dao.getQuestion().selecQuestionParId(idQ);
+		libelle.setText(q.getEnonce());
+		corrige.setText(q.getCorrige());
+		upload = q.getPhoto();
+		ArrayList<Proposition> pArrayList = dao.getProposition().selecPropQuestion(idQ);
+		nbQuestionsModifBase = pArrayList.size();
+		for(int i = 0; i < pArrayList.size(); i++)
+		{
+			if(i >= 1)
+			{
+				ajouterProposition(pArrayList.get(i).getEnonce());
+			}
+			else
+			{
+				props.get(i).setText(pArrayList.get(i).getEnonce());
+			}
+			propsCheck.get(i).setSelected(pArrayList.get(i).getValide());
+		}
+		for(Component c : getComponents())
+		{
+			if(c instanceof JTextField)
+				c.setForeground(Color.BLACK);
+		}
+		libelle.setForeground(Color.BLACK);
+		corrige.setForeground(Color.BLACK);
+		for(JTextField j : props)
+		{
+			j.setPreferredSize(textPreferredSize);
+		}
+		idQModification = idQ;
+		isUploaded = true;
+	}
+
+	private void initGUI()
 	{
 		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
 		setLayout(new GridBagLayout());
@@ -69,11 +110,9 @@ public class QuestionGUI extends JPanel
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 5, 0);
-		JLabel title = new JLabel("d'une question");
-		title.setFont(new Font("Roboto", Font.PLAIN, 40));
-		add(title, gbc);
-
-		title.setText("Ajout " + title.getText());
+		titre = new JLabel("Ajout d'une question");
+		titre.setFont(new Font("Roboto", Font.PLAIN, 40));
+		add(titre, gbc);
 		libelle = new JTextArea("Libellé de la question");
 		gbc.insets = new Insets(5, 0, 5, 0);
 		libelle.setLineWrap(true);
@@ -100,11 +139,14 @@ public class QuestionGUI extends JPanel
 		JTextField propA = new JTextField("Proposition A");
 		props.add(propA);
 		add(propA, gbc);
+
+		textPreferredSize = propA.getPreferredSize();
+
 		JCheckBox checkBox = new JCheckBox();
 		propsCheck.add(checkBox);
 		gbc.gridx += 1;
-		gbc.ipadx = 0;
 		gbc.insets = new Insets(20, -140, 5, 0);
+		gbc.ipadx = 0;
 		add(checkBox, gbc);
 		gbc.gridx = 0;
 		gbc.gridy += 1;
@@ -125,7 +167,7 @@ public class QuestionGUI extends JPanel
 	private void ajouterProposition()
 	{
 		String[] lettresProp = { "B", "C", "D" };
-		if (props.size() <= 3)
+		if(props.size() <= 3)
 		{
 			int coordX = props.size();
 			GridBagConstraints gbc = new GridBagConstraints();
@@ -152,7 +194,38 @@ public class QuestionGUI extends JPanel
 			newProp.addFocusListener(new CustomFocusListener());
 			setAreaCustomPreferedSize();
 
-			((MainGUI) SwingUtilities.getWindowAncestor(QuestionGUI.this)).applyChanges();
+			((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
+		}
+	}
+
+	private void ajouterProposition(String txt)
+	{
+		if(props.size() <= 3)
+		{
+			int coordX = props.size();
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.insets = new Insets(5, 0, 5, 0);
+			gbc.gridx = 0;
+			gbc.gridy = 5 + coordX;
+			add(ajouterProp, gbc);
+			gbc.insets = new Insets(20, 0, 0, 0);
+			gbc.gridy = 6 + coordX;
+			add(valider, gbc);
+			JTextField newProp = new JTextField(txt);
+			props.add(newProp);
+			gbc.insets = new Insets(5, 0, 5, 0);
+			gbc.gridy = 4 + coordX;
+			gbc.ipadx = 110;
+			add(newProp, gbc);
+			gbc.gridx += 1;
+			gbc.ipadx = 0;
+			gbc.insets = new Insets(5, -140, 5, 0);
+			JCheckBox checkBox = new JCheckBox();
+			propsCheck.add(checkBox);
+			add(checkBox, gbc);
+			newProp.setForeground(Color.GRAY);
+			newProp.addFocusListener(new CustomFocusListener());
+			setAreaCustomPreferedSize();
 		}
 	}
 
@@ -164,13 +237,13 @@ public class QuestionGUI extends JPanel
 
 	private void initListeners()
 	{
-		for (Component c : getComponents())
+		for(Component c : getComponents())
 		{
-			if (c instanceof JButton)
+			if(c instanceof JButton)
 			{
 				c.addMouseListener(new CustomMouseListener());
 			}
-			else if (c instanceof JTextField)
+			else if(c instanceof JTextField)
 			{
 				c.setForeground(Color.GRAY);
 				c.addFocusListener(new CustomFocusListener());
@@ -189,9 +262,9 @@ public class QuestionGUI extends JPanel
 		boolean res = true;
 		String[] s = { "A", "B", "C", "D" };
 		int i = 0;
-		for (JTextField j : props)
+		for(JTextField j : props)
 		{
-			if (j.getText().equals("Proposition " + s[i]))
+			if(j.getText().equals("Proposition " + s[i]))
 				res = false;
 			i++;
 		}
@@ -200,7 +273,7 @@ public class QuestionGUI extends JPanel
 
 	private void displayError()
 	{
-		if (!isErrorDisplayed)
+		if(!isErrorDisplayed)
 		{
 			JLabel lib = new JLabel("Choisissez une image ou renseignez toutes les propositions");
 			lib.setForeground(Color.RED);
@@ -240,30 +313,30 @@ public class QuestionGUI extends JPanel
 	{
 		public void focusGained(FocusEvent e)
 		{
-			if (e.getSource() instanceof JTextArea)
+			if(e.getSource() instanceof JTextArea)
 			{
 				JTextArea a = (JTextArea) e.getSource();
-				if (a.getText().equals("Libellé de la question") && a == libelle)
+				if(a.getText().equals("Libellé de la question") && a == libelle)
 				{
 					a.setText("");
 					a.setForeground(Color.BLACK);
 				}
-				else if (a.getText().equals("Corrigé de la question") && a == corrige)
+				else if(a.getText().equals("Corrigé de la question") && a == corrige)
 				{
 					a.setText("");
 					a.setForeground(Color.BLACK);
 				}
 			}
-			else if (e.getSource() instanceof JTextField)
+			else if(e.getSource() instanceof JTextField)
 			{
 				JTextField f = (JTextField) e.getSource();
 				String[] s = { "A", "B", "C", "D" };
 				int i = 0;
-				for (JTextField field : props)
+				for(JTextField field : props)
 				{
-					if (field == f)
+					if(field == f)
 					{
-						if (field.getText().equals("Proposition " + s[i]))
+						if(field.getText().equals("Proposition " + s[i]))
 						{
 							field.setText("");
 							field.setForeground(Color.BLACK);
@@ -276,33 +349,33 @@ public class QuestionGUI extends JPanel
 
 		public void focusLost(FocusEvent e)
 		{
-			if (e.getSource() instanceof JTextArea)
+			if(e.getSource() instanceof JTextArea)
 			{
 				JTextArea a = (JTextArea) e.getSource();
-				if (a.getText().equals(""))
+				if(a.getText().equals(""))
 				{
-					if (a == libelle)
+					if(a == libelle)
 					{
 						a.setText("Libellé de la question");
 						a.setForeground(Color.GRAY);
 					}
-					else if (a == corrige)
+					else if(a == corrige)
 					{
 						a.setText("Corrigé de la question");
 						a.setForeground(Color.GRAY);
 					}
 				}
 			}
-			else if (e.getSource() instanceof JTextField)
+			else if(e.getSource() instanceof JTextField)
 			{
 				JTextField f = (JTextField) e.getSource();
 				String[] s = { "A", "B", "C", "D" };
 				int i = 0;
-				for (JTextField field : props)
+				for(JTextField field : props)
 				{
-					if (field == f)
+					if(field == f)
 					{
-						if (field.getText().equals(""))
+						if(field.getText().equals(""))
 						{
 							field.setText("Proposition " + s[i]);
 							field.setForeground(Color.GRAY);
@@ -318,22 +391,30 @@ public class QuestionGUI extends JPanel
 	{
 		public void mouseClicked(MouseEvent e)
 		{
-			if (e.getSource() instanceof JButton)
+			if(e.getSource() instanceof JButton)
 			{
-				switch (((JButton) e.getSource()).getText())
+				switch(((JButton) e.getSource()).getText())
 				{
 				case "Uploader une image":
 					JFileChooser browse = new JFileChooser();
 					FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
 					browse.setFileFilter(filter);
-					if (browse.showOpenDialog(QuestionGUI.this) == JFileChooser.APPROVE_OPTION)
+					if(browse.showOpenDialog(GestQuestion.this) == JFileChooser.APPROVE_OPTION)
 					{
 						File f = browse.getSelectedFile();
 						int idQ = DAOFactory.getInstance().getQuestion().selecNbQuestions() + 1;
 						sendPostImage(f, idQ);
 						String name = f.getName();
 						upload = idQ + name.substring(name.lastIndexOf('.'));
-						System.out.println("Upload effectué !");
+						GridBagConstraints gbc = new GridBagConstraints();
+						gbc.gridx = 1;
+						gbc.gridy = 3;
+						gbc.insets = new Insets(0, -140, 0, 0);
+						JLabel validationUpload = new JLabel("Upload effectué");
+						validationUpload.setForeground(Color.DARK_GRAY);
+						GestQuestion.this.add(validationUpload, gbc);
+						((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
+						setAreaCustomPreferedSize();
 						isUploaded = true;
 					}
 					break;
@@ -341,23 +422,46 @@ public class QuestionGUI extends JPanel
 					ajouterProposition();
 					break;
 				case "Enregistrer la question et ses réponses":
-					if (isUploaded && validPropositions())
+					if(isUploaded && validPropositions())
 					{
 						DAOFactory daoF = DAOFactory.getInstance();
 						int idQ = daoF.getQuestion()
 								.enregistrerQuestion(new Question(libelle.getText(), corrige.getText(), upload));
 						PropositionDAO propDAO = daoF.getProposition();
 						int i = 0;
-						for (JTextField j : props)
+						for(JTextField j : props)
 						{
 							propDAO.enregistrerProp(new Proposition(j.getText(), propsCheck.get(i).isSelected()), idQ);
 							i++;
 						}
-						((MainGUI) SwingUtilities.getWindowAncestor(QuestionGUI.this)).changePanel(new MenuChoix());
+						((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
 					}
 					else
 					{
 						displayError();
+					}
+					break;
+				case "Mettre à jour la question et ses réponses":
+					if(isUploaded && validPropositions())
+					{
+						DAOFactory daoF = DAOFactory.getInstance();
+						daoF.getQuestion().updateQuestion(new Question(libelle.getText(), corrige.getText(), upload), idQModification);
+						int i = 0;
+						PropositionDAO propDAO = daoF.getProposition();
+						for(JTextField j : props)
+						{
+							if(i + 1 <= nbQuestionsModifBase)
+							{
+								int idProp = propDAO.selecIdPropParEnonceEtQuestion(j.getText(), idQModification);
+								propDAO.updateProposition(j.getText(), idQModification, propsCheck.get(i).isSelected(), idProp);
+							}
+							else
+							{
+								propDAO.enregistrerProp(new Proposition(j.getText(), propsCheck.get(i).isSelected()), idQModification);
+							}
+							i++;
+						}
+						((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
 					}
 					break;
 				}
