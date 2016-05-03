@@ -117,7 +117,7 @@ public class Connexion extends JPanel
 		}
 	}
 		
-	// Gestionnaires d'évènement
+	// Gestionnaires d'évènements
 	private class CustomMouseListener extends MouseAdapter
 	{
 		public void mouseClicked(MouseEvent e)

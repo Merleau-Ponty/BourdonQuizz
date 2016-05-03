@@ -87,4 +87,9 @@ public class DAOFactory
 	{
 		return new PropositionDAO(this);
 	}
+	
+	public QuizzDAO getQuizz()
+	{
+		return new QuizzDAO(this);
+	}
 }

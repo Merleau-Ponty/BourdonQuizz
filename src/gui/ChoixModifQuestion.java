@@ -43,9 +43,6 @@ public class ChoixModifQuestion extends JPanel
 		gbc.gridy += 1;
 		JScrollPane scrollPane = new JScrollPane(genQuestions());
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-//		Dimension dim = ((JFrame)SwingUtilities.getWindowAncestor(this)).getBounds().getSize();
-//		dim.setSize(dim.getWidth(), 0.75 * dim.getHeight());
-//		scrollPane.setPreferredSize(dim);
 		add(scrollPane, gbc);
 		
 		setBorder(BorderFactory.createEmptyBorder(0,100,5,100));
@@ -73,7 +70,7 @@ public class ChoixModifQuestion extends JPanel
 		return panel;
 	}
 	
-	// Gestionnaire d'évènement
+	// Gestionnaire d'évènements
 	private class CustomMouseListener extends MouseAdapter
 	{
 		public void mouseClicked(MouseEvent e)

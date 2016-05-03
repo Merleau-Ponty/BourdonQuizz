@@ -169,7 +169,7 @@ public class MainGUI extends JFrame
 		}
 	}
 	
-	// Gestionnaire d'évènement
+	// Gestionnaire d'évènements
 	private class CustomActionListener extends AbstractAction
 	{
 		public void actionPerformed(ActionEvent e)
@@ -187,6 +187,9 @@ public class MainGUI extends JFrame
 					break;
 				case "Modifier une question":
 					changePanel(new ChoixModifQuestion());
+					break;
+				case "Ajouter un quizz":
+					changePanel(new CreationQuizz());
 					break;
 				case "Se déconnecter":
 					changeConnectedStateDisconnected();

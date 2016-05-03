@@ -10,9 +10,6 @@ public class JoueurDAO extends DAOImpl
 	public JoueurDAO(DAOFactory fac)
 	{
 		dao = fac;
-		prep = null;
-		conn = null;
-		res = null;
 	}
 	
 	public void insererJoueur(Joueur j) throws DAOException

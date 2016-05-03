@@ -308,7 +308,7 @@ public class GestQuestion extends JPanel
 		response.getEntity();
 	}
 
-	// Gestionnaires d'évènement
+	// Gestionnaires d'évènements
 	private class CustomFocusListener extends FocusAdapter
 	{
 		public void focusGained(FocusEvent e)

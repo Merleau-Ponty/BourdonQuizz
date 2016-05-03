@@ -11,9 +11,6 @@ public class PropositionDAO extends DAOImpl
 	public PropositionDAO(DAOFactory fac)
 	{
 		dao = fac;
-		prep = null;
-		conn = null;
-		res = null;
 	}
 	
 	public void enregistrerProp(Proposition p, int idQ)

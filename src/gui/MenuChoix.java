@@ -108,7 +108,7 @@ public class MenuChoix extends JPanel
 			}
 			else if(src == ajouterQuizz)
 			{
-				
+				gui.changePanel(new CreationQuizz());
 			}
 			else if(src == modifierQuizz)
 			{
