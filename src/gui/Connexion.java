@@ -1,12 +1,18 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.RenderingHints.Key;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.text.JTextComponent.KeyBinding;
 
 import dao.DAOFactory;
 import dao.JoueurDAO;
@@ -61,6 +68,7 @@ public class Connexion extends JPanel
 		add(txtLogin, gbc_txtLogin);
 		txtLogin.setColumns(10);
 		txtLogin.addFocusListener(new CustomFocusListener());
+		txtLogin.addKeyListener(new CustomKeyListener());
 
 		txtMotDePasse = new JPasswordField();
 		txtMotDePasse.setEchoChar((char)0);
@@ -73,6 +81,7 @@ public class Connexion extends JPanel
 		add(txtMotDePasse, gbc_txtMotDePasse);
 		txtMotDePasse.setColumns(10);
 		txtMotDePasse.addFocusListener(new CustomFocusListener());
+		txtMotDePasse.addKeyListener(new CustomKeyListener());
 
 		pasInscrit = new JButton("Pas encore inscrit ?");
 		GridBagConstraints gbc_pasInscrit = new GridBagConstraints();
@@ -88,6 +97,13 @@ public class Connexion extends JPanel
 		gbc_seConnecter.gridy = 12;
 		add(connexion, gbc_seConnecter);
 		connexion.addMouseListener(new CustomMouseListener());
+		connexion.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				seConnecter();
+			}
+		});
 		
 		setBorder(BorderFactory.createEmptyBorder(0,100,5,100));
 		
@@ -99,6 +115,7 @@ public class Connexion extends JPanel
 				grabFocus();
 			}
 		});
+		this.addKeyListener(new CustomKeyListener());
 	}
 	
 	public void displayError()
@@ -116,31 +133,38 @@ public class Connexion extends JPanel
 			((MainGUI)SwingUtilities.getWindowAncestor(this)).applyChanges();
 		}
 	}
+	
+	private void seConnecter()
+	{
+		DAOFactory f = DAOFactory.getInstance();
+		JoueurDAO j = f.getJoueur();
+		String login = txtLogin.getText();
+		if(j.seConnecter(login, String.valueOf(txtMotDePasse.getPassword())))
+		{
+			((MainGUI)SwingUtilities.getWindowAncestor(Connexion.this)).changeToMenuChoix(login, j.selecJoueurParLogin(login));
+		}
+		else
+			Connexion.this.displayError();
+	}
 		
 	// Gestionnaires d'évènements
 	private class CustomMouseListener extends MouseAdapter
 	{
 		public void mouseClicked(MouseEvent e)
 		{
+			System.out.println("Entré !");
 			if(e.getSource() == pasInscrit)
 			{
 				((MainGUI)SwingUtilities.getWindowAncestor(Connexion.this)).changePanel(new Inscription());;
 			}
 			else if(e.getSource() == connexion)
 			{
-				DAOFactory f = DAOFactory.getInstance();
-				JoueurDAO j = f.getJoueur();
-				String login = txtLogin.getText();
-				if(j.seConnecter(login, String.valueOf(txtMotDePasse.getPassword())))
-				{
-					((MainGUI)SwingUtilities.getWindowAncestor(Connexion.this)).changeToMenuChoix(login, j.selecJoueurParLogin(login));
-				}
-				else
-					Connexion.this.displayError();
+				seConnecter();
 			}
 		}
 	}
 	
+	// Réinitialisation des champs
 	private class CustomFocusListener extends FocusAdapter
 	{
 		public void focusGained(FocusEvent e)
@@ -182,6 +206,18 @@ public class Connexion extends JPanel
 					txtMotDePasse.setForeground(Color.GRAY);
 					txtMotDePasse.setEchoChar((char)0);
 				}
+			}
+		}
+	}
+	
+	// Soumission du formulaire avec la touche entrée
+	private class CustomKeyListener extends KeyAdapter
+	{
+		public void keyPressed(KeyEvent e)
+		{
+			if(e.getKeyCode() == KeyEvent.VK_ENTER)
+			{
+				connexion.doClick();
 			}
 		}
 	}
