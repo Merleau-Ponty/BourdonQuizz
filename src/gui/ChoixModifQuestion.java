@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,7 +20,7 @@ import metier.Question;
 
 public class ChoixModifQuestion extends JPanel
 {
-	ArrayList<Question> qArrayList;
+	private ArrayList<Question> qArrayList;
 	
 	public ChoixModifQuestion()
 	{
@@ -55,7 +53,6 @@ public class ChoixModifQuestion extends JPanel
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		
 		for(Question q : qArrayList)
 		{
 			gbc.insets = new Insets(5, 0, 5, 0);

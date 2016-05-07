@@ -69,7 +69,7 @@ public class GestQuestion extends JPanel
 		titre.setText("Modifier une question");
 		DAOFactory dao = DAOFactory.getInstance();
 		valider.setText("Mettre à jour la question et ses réponses");
-		Question q = dao.getQuestion().selecQuestionParId(idQ);
+		Question q = dao.getQuestion().selecParId(idQ);
 		libelle.setText(q.getEnonce());
 		corrige.setText(q.getCorrige());
 		upload = q.getPhoto();
@@ -445,7 +445,7 @@ public class GestQuestion extends JPanel
 					if(isUploaded && validPropositions())
 					{
 						DAOFactory daoF = DAOFactory.getInstance();
-						daoF.getQuestion().updateQuestion(new Question(libelle.getText(), corrige.getText(), upload), idQModification);
+						daoF.getQuestion().update(new Question(libelle.getText(), corrige.getText(), upload), idQModification);
 						int i = 0;
 						PropositionDAO propDAO = daoF.getProposition();
 						for(JTextField j : props)

@@ -83,14 +83,14 @@ public class QuestionDAO extends DAOImpl
 		return a;
  	}
 	
-	public ArrayList<Question> selecQuestionsDisponiblesQuizz(int idQuizz)
+	public ArrayList<Question> selecQuestionsSupprimablesQuizz(int idQuizz)
 	{
 		ArrayList<Question> a = new ArrayList<Question>();
 		try
 		{
 			conn = dao.getConnection();
 			prep = initialisationRequetePreparee(conn, "select * from QUESTION q inner join CONTENIR c on q.ID_QUESTION = c.ID_QUESTION "
-					+ "inner join QUIZZ q on q.ID_QUIZZ = c.ID_QUIZZ where q.ID_QUIZZ = ?", 
+					+ "inner join QUIZZ qu on qu.ID_QUIZZ = c.ID_QUIZZ where qu.ID_QUIZZ = ?", 
 					false, idQuizz);
 			res = prep.executeQuery();
 			while(res.next())
@@ -107,7 +107,7 @@ public class QuestionDAO extends DAOImpl
 		return a;
 	}
 	
-	public Question selecQuestionParId(int idQ)
+	public Question selecParId(int idQ)
 	{
 		Question q = null;
 		try
@@ -129,31 +129,13 @@ public class QuestionDAO extends DAOImpl
 		return q;
 	}
 	
-	public void updateQuestion(Question q, int idQ)
+	public void update(Question q, int idQ)
 	{
 		try
 		{
 			conn = dao.getConnection();
 			prep = initialisationRequetePreparee(conn, "update QUESTION set ENONCE = ?, PHOTO = ?, CORRIGE = ? where ID_QUESTION = ?", 
 					false, q.getEnonce(), q.getPhoto(), q.getCorrige(), idQ);
-			prep.executeUpdate();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			close(prep, conn);
-		}
-	}
-	
-	public void ajouterQuestionQuizz(int idQuizz, Question q)
-	{
-		try
-		{
-			conn = dao.getConnection();
-			prep = initialisationRequetePreparee(conn, "insert into CONTENIR values (?, ?)", false, q.getIdQuestion(), idQuizz);
 			prep.executeUpdate();
 		}
 		catch(SQLException e)

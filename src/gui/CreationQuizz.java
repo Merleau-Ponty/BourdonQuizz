@@ -46,7 +46,7 @@ public class CreationQuizz extends JPanel
 		add(titre, gbc);
 		gbc.insets = new Insets(5, 0, 0, 0);
 		gbc.gridy += 1;
-		add(new JLabel("Choisissez une question à ajouter"), gbc);
+		add(new JLabel("Choisissez une question à ajouter :"), gbc);
 		gbc.insets = new Insets(0, 0, 5, 0);
 		gbc.gridy += 1;
 		listeQDisponibles = new Choice();
@@ -64,7 +64,7 @@ public class CreationQuizz extends JPanel
 		add(ajouterQ, gbc);
 		gbc.gridy += 1;
 		gbc.insets = new Insets(20, 0, 0, 0);
-		JButton valider = new JButton("Valider le quizz");
+		JButton valider = new JButton("Créer le quizz");
 		valider.addMouseListener(new CustomMouseListener());
 		add(valider, gbc);
 	}
@@ -114,12 +114,12 @@ public class CreationQuizz extends JPanel
 						timer.start();
 					}
 					break;
-				case "Valider le quizz":
+				case "Créer le quizz":
 					DAOFactory dao = DAOFactory.getInstance();
 					int idQuizz = dao.getQuizz().creerQuizz();
 					for(Question q : listeQAAjouter)
 					{
-						dao.getQuestion().ajouterQuestionQuizz(idQuizz, q);
+						dao.getContenir().ajouterQuestionQuizz(q.getIdQuestion(), idQuizz);
 					}
 					((MainGUI)SwingUtilities.getWindowAncestor(CreationQuizz.this)).changePanel(new MenuChoix());
 					break;

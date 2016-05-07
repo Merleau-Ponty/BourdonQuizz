@@ -2,6 +2,7 @@ package metier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Question
 {
@@ -37,13 +38,55 @@ public class Question
 		}
 		return q;
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(!(obj instanceof Question))
+			return false;
+		Question other = (Question) obj;
+		if(corrige == null)
+		{
+			if(other.corrige != null)
+				return false;
+		}
+		else if(!corrige.equals(other.corrige))
+			return false;
+		if(enonce == null)
+		{
+			if(other.enonce != null)
+				return false;
+		}
+		else if(!enonce.equals(other.enonce))
+			return false;
+		if(id_question != other.id_question)
+			return false;
+		if(photo == null)
+		{
+			if(other.photo != null)
+				return false;
+		}
+		else if(!photo.equals(other.photo))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(enonce, corrige, id_question, photo);
+	}
 
 	// Getters & setters
 	public String getEnonce()
 	{
 		return enonce;
 	}
-	
+
 	public int getIdQuestion()
 	{
 		return id_question;

@@ -191,6 +191,9 @@ public class MainGUI extends JFrame
 				case "Ajouter un quizz":
 					changePanel(new CreationQuizz());
 					break;
+				case "Modifier un quizz":
+					changePanel(new ChoixModifQuizz());
+					break;
 				case "Se déconnecter":
 					changeConnectedStateDisconnected();
 					break;

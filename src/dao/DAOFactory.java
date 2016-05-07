@@ -92,4 +92,9 @@ public class DAOFactory
 	{
 		return new QuizzDAO(this);
 	}
+	
+	public ContenirDAO getContenir()
+	{
+		return new ContenirDAO(this);
+	}
 }

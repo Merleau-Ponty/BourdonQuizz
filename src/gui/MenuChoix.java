@@ -112,7 +112,7 @@ public class MenuChoix extends JPanel
 			}
 			else if(src == modifierQuizz)
 			{
-				
+				gui.changePanel(new ChoixModifQuizz());
 			}
 			else if(src == resultats)
 			{
