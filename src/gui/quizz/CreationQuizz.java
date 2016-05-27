@@ -1,4 +1,4 @@
-package gui;
+package gui.quizz;
 
 import java.awt.Choice;
 import java.awt.Font;
@@ -19,6 +19,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import dao.DAOFactory;
+import gui.MenuChoix;
+import main.MainFrame;
 import metier.Question;
 
 public class CreationQuizz extends JPanel
@@ -121,7 +123,7 @@ public class CreationQuizz extends JPanel
 					{
 						dao.getContenir().ajouterQuestionQuizz(q.getIdQuestion(), idQuizz);
 					}
-					((MainGUI)SwingUtilities.getWindowAncestor(CreationQuizz.this)).changePanel(new MenuChoix());
+					((MainFrame)SwingUtilities.getWindowAncestor(CreationQuizz.this)).changePanel(new MenuChoix());
 					break;
 			}
 		}

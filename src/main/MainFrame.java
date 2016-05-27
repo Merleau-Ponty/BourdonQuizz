@@ -1,4 +1,4 @@
-package gui;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -11,9 +11,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import gui.Connexion;
+import gui.InfosCreateurs;
+import gui.Inscription;
+import gui.MenuChoix;
+import gui.question.ChoixModifQuestion;
+import gui.question.GestQuestion;
+import gui.quizz.ChoixJouerQuizz;
+import gui.quizz.ChoixModifQuizz;
+import gui.quizz.CreationQuizz;
+import gui.quizz.JouerQuizz;
 import metier.Joueur;
 
-public class MainGUI extends JFrame
+public class MainFrame extends JFrame
 {		
 	private JMenuBar barre = new JMenuBar();
 	private JMenu menu = new JMenu("Menu");
@@ -21,7 +31,7 @@ public class MainGUI extends JFrame
 	private JMenuItem userInfo = new JMenuItem("Non connecté");
 	private JMenu aide = new JMenu("Aide");
 	
-	public MainGUI() 
+	public MainFrame() 
 	{
 		super("Application code de la route");
 		initGUI();
@@ -193,6 +203,9 @@ public class MainGUI extends JFrame
 					break;
 				case "Modifier un quizz":
 					changePanel(new ChoixModifQuizz());
+					break;
+				case "Faire un quizz":
+					changePanel(new ChoixJouerQuizz());
 					break;
 				case "Se déconnecter":
 					changeConnectedStateDisconnected();

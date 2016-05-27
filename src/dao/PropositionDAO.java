@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.PrimitiveIterator.OfDouble;
 
 import metier.Proposition;
 
@@ -18,8 +17,8 @@ public class PropositionDAO extends DAOImpl
 		try
 		{
 			conn = dao.getConnection();
-			prep = initialisationRequetePreparee(conn, "insert into PROPOSITION(ID_QUESTION, ENONCE, VALIDE) values (?, ?, ?)", false, 
-					idQ, p.getEnonce(), p.getValide());
+			prep = initialisationRequetePreparee(conn, "insert into PROPOSITION values (?, ?, ?, ?)", false, 
+					idQ, 100, p.getEnonce(), p.getValide());
 			prep.executeUpdate();
 		}
 		catch(SQLException e)
@@ -38,7 +37,7 @@ public class PropositionDAO extends DAOImpl
 		try
 		{
 			conn = dao.getConnection();
-			prep = initialisationRequetePreparee(conn, "select * from PROPOSITION where ID_QUESTION = ?", false, idQ);
+			prep = initialisationRequetePreparee(conn, "select * from PROPOSITION where ID_QUESTION = ? order by ID_PROP asc", false, idQ);
 			res = prep.executeQuery();
 			while(res.next())
 			{

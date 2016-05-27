@@ -4,8 +4,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import gui.MainGUI;
-
 public class Main
 {
 	public static void main(String[] args) throws UnsupportedLookAndFeelException, IllegalAccessException, InstantiationException, ClassNotFoundException
@@ -15,7 +13,7 @@ public class Main
 		{
 			public void run()
 			{
-				new MainGUI();
+				new MainFrame();
 			}
 		});
 	}

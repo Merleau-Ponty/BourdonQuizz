@@ -1,4 +1,4 @@
-package gui;
+package gui.quizz;
 
 import java.awt.Choice;
 import java.awt.Font;
@@ -18,6 +18,8 @@ import javax.swing.SwingUtilities;
 import dao.ContenirDAO;
 import dao.DAOFactory;
 import dao.QuestionDAO;
+import gui.MenuChoix;
+import main.MainFrame;
 import metier.Question;
 
 public class ModifQuizz extends JPanel
@@ -150,7 +152,7 @@ public class ModifQuizz extends JPanel
 					{
 						cDAO.ajouterQuestionQuizz(q.getIdQuestion(), idQuizz);
 					}
-					((MainGUI)SwingUtilities.getWindowAncestor(ModifQuizz.this)).changePanel(new MenuChoix());
+					((MainFrame)SwingUtilities.getWindowAncestor(ModifQuizz.this)).changePanel(new MenuChoix());
 					break;
 			}
 		}

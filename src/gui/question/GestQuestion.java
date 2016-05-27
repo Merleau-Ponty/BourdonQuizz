@@ -1,4 +1,4 @@
-package gui;
+package gui.question;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -37,6 +37,8 @@ import org.apache.http.impl.client.HttpClients;
 
 import dao.DAOFactory;
 import dao.PropositionDAO;
+import gui.MenuChoix;
+import main.MainFrame;
 import metier.Proposition;
 import metier.Question;
 
@@ -139,9 +141,7 @@ public class GestQuestion extends JPanel
 		JTextField propA = new JTextField("Proposition A");
 		props.add(propA);
 		add(propA, gbc);
-
 		textPreferredSize = propA.getPreferredSize();
-
 		JCheckBox checkBox = new JCheckBox();
 		propsCheck.add(checkBox);
 		gbc.gridx += 1;
@@ -194,7 +194,7 @@ public class GestQuestion extends JPanel
 			newProp.addFocusListener(new CustomFocusListener());
 			setAreaCustomPreferedSize();
 
-			((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
+			((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
 		}
 	}
 
@@ -282,7 +282,7 @@ public class GestQuestion extends JPanel
 			gbc.gridy = 6 + props.size();
 			add(lib, gbc);
 			isErrorDisplayed = true;
-			((MainGUI) SwingUtilities.getWindowAncestor(this)).applyChanges();
+			((MainFrame) SwingUtilities.getWindowAncestor(this)).applyChanges();
 
 		}
 	}
@@ -413,7 +413,7 @@ public class GestQuestion extends JPanel
 						JLabel validationUpload = new JLabel("Upload effectué");
 						validationUpload.setForeground(Color.DARK_GRAY);
 						GestQuestion.this.add(validationUpload, gbc);
-						((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
+						((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
 						setAreaCustomPreferedSize();
 						isUploaded = true;
 					}
@@ -434,7 +434,7 @@ public class GestQuestion extends JPanel
 							propDAO.enregistrerProp(new Proposition(j.getText(), propsCheck.get(i).isSelected()), idQ);
 							i++;
 						}
-						((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
+						((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
 					}
 					else
 					{
@@ -461,7 +461,7 @@ public class GestQuestion extends JPanel
 							}
 							i++;
 						}
-						((MainGUI) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
+						((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
 					}
 					break;
 				}

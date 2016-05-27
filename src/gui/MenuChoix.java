@@ -14,6 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import gui.question.ChoixModifQuestion;
+import gui.question.GestQuestion;
+import gui.quizz.ChoixJouerQuizz;
+import gui.quizz.ChoixModifQuizz;
+import gui.quizz.CreationQuizz;
+import main.MainFrame;
 import metier.Joueur;
 
 public class MenuChoix extends JPanel
@@ -58,19 +64,18 @@ public class MenuChoix extends JPanel
 			add(ajouterQues, gbc);
 			modifierQues = new JButton("Modifier une question");
 			gbc.gridy += 1;
-			gbc.insets = new Insets(2, 0, 12, 0);
+			gbc.insets.bottom = 12;
 			add(modifierQues, gbc);
 			ajouterQuizz = new JButton("Ajouter un quizz");
 			gbc.gridy += 1;
-			gbc.insets = new Insets(2, 0, 2, 0);
+			gbc.insets.bottom = 2;
 			add(ajouterQuizz, gbc);
 			modifierQuizz = new JButton("Modifier un quizz");
 			gbc.gridy += 1;
-			gbc.insets = new Insets(2, 0, 12, 0);
+			gbc.insets.bottom = 12;
 			add(modifierQuizz, gbc);
 			resultats = new JButton("Visualiser les résultats");
 			gbc.gridy += 1;
-			gbc.insets = new Insets(2, 0, 12, 0);
 			add(resultats, gbc);
 		}
 		else
@@ -82,7 +87,7 @@ public class MenuChoix extends JPanel
 			add(jouerQuizz, gbc);
 		}
 		initListeners();
-		setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10));
+		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
 	}
 	
 	private void initListeners()
@@ -99,7 +104,7 @@ public class MenuChoix extends JPanel
 		public void mouseClicked(MouseEvent e)
 		{
 			JButton src = (JButton)e.getSource();
-			MainGUI gui = (MainGUI)SwingUtilities.getWindowAncestor(MenuChoix.this);
+			MainFrame gui = (MainFrame)SwingUtilities.getWindowAncestor(MenuChoix.this);
 			if(src == ajouterQues)
 				gui.changePanel(new GestQuestion());
 			else if(src == modifierQues)
@@ -120,7 +125,7 @@ public class MenuChoix extends JPanel
 			}
 			else if(src == jouerQuizz)
 			{
-				
+				gui.changePanel(new ChoixJouerQuizz());
 			}
 		}
 	}

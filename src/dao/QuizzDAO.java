@@ -3,7 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.ldap.PagedResultsResponseControl;
+import metier.Question;
 
 public class QuizzDAO extends DAOImpl
 {
@@ -11,7 +11,7 @@ public class QuizzDAO extends DAOImpl
 	{
 		dao = fac;
 	}
-	
+
 	public int creerQuizz()
 	{
 		Integer idQuizz = null;
@@ -24,17 +24,17 @@ public class QuizzDAO extends DAOImpl
 			if(res.next())
 				idQuizz = res.getInt(1);
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		finally 
+		finally
 		{
 			close(res, prep, conn);
 		}
 		return idQuizz;
 	}
-	
+
 	public ArrayList<Integer> selectTousQuizz()
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();
@@ -46,11 +46,34 @@ public class QuizzDAO extends DAOImpl
 			while(res.next())
 				a.add(res.getInt(1));
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		finally 
+		finally
+		{
+			close(res, prep, conn);
+		}
+		return a;
+	}
+
+	public ArrayList<Question> selecQuestionsQuizz(int idQuizz)
+	{
+		ArrayList<Question> a = new ArrayList<Question>();
+		try
+		{
+			conn = dao.getConnection();
+			prep = initialisationRequetePreparee(conn, "select * from QUESTION where ID_QUESTION in "
+					+ "(select ID_QUESTION from CONTENIR where ID_QUIZZ = ?) order by QUESTION.ID_QUESTION asc", false, idQuizz);
+			res = prep.executeQuery();
+			while(res.next())
+				a.add(Question.genQuestion(res));
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
 		{
 			close(res, prep, conn);
 		}

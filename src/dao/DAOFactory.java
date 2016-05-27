@@ -97,4 +97,14 @@ public class DAOFactory
 	{
 		return new ContenirDAO(this);
 	}
+	
+	public TentativeDAO getTentative()
+	{
+		return new TentativeDAO(this);
+	}
+	
+	public ReponseDAO getReponse()
+	{
+		return new ReponseDAO(this);
+	}
 }

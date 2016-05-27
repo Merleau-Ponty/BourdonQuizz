@@ -27,6 +27,7 @@ import javax.swing.text.JTextComponent.KeyBinding;
 
 import dao.DAOFactory;
 import dao.JoueurDAO;
+import main.MainFrame;
 
 public class Connexion extends JPanel
 {
@@ -130,7 +131,7 @@ public class Connexion extends JPanel
 			gbc_err.gridy = 13;
 			add(err, gbc_err);
 			displayErr = true;
-			((MainGUI)SwingUtilities.getWindowAncestor(this)).applyChanges();
+			((MainFrame)SwingUtilities.getWindowAncestor(this)).applyChanges();
 		}
 	}
 	
@@ -141,7 +142,7 @@ public class Connexion extends JPanel
 		String login = txtLogin.getText();
 		if(j.seConnecter(login, String.valueOf(txtMotDePasse.getPassword())))
 		{
-			((MainGUI)SwingUtilities.getWindowAncestor(Connexion.this)).changeToMenuChoix(login, j.selecJoueurParLogin(login));
+			((MainFrame)SwingUtilities.getWindowAncestor(Connexion.this)).changeToMenuChoix(login, j.selecJoueurParLogin(login));
 		}
 		else
 			Connexion.this.displayError();
@@ -155,7 +156,7 @@ public class Connexion extends JPanel
 			System.out.println("Entré !");
 			if(e.getSource() == pasInscrit)
 			{
-				((MainGUI)SwingUtilities.getWindowAncestor(Connexion.this)).changePanel(new Inscription());;
+				((MainFrame)SwingUtilities.getWindowAncestor(Connexion.this)).changePanel(new Inscription());;
 			}
 			else if(e.getSource() == connexion)
 			{

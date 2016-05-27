@@ -24,6 +24,7 @@ import javax.swing.SwingUtilities;
 
 import dao.DAOFactory;
 import dao.JoueurDAO;
+import main.MainFrame;
 
 public class Inscription extends JPanel
 {
@@ -169,7 +170,7 @@ public class Inscription extends JPanel
 			gbc_err.gridy = 12;
 			add(err, gbc_err);
 			displayErr = true;
-			((MainGUI) SwingUtilities.getWindowAncestor(this)).applyChanges();
+			((MainFrame) SwingUtilities.getWindowAncestor(this)).applyChanges();
 		}
 	}
 
@@ -204,7 +205,7 @@ public class Inscription extends JPanel
 				{
 					DAOFactory f = DAOFactory.getInstance();
 					JoueurDAO jdao = f.getJoueur();
-					((MainGUI) SwingUtilities.getWindowAncestor(Inscription.this))
+					((MainFrame) SwingUtilities.getWindowAncestor(Inscription.this))
 							.changeToMenuChoix(jdao.inscrireJoueur(ins), jdao.selecJoueurParLogin(login.getText()));
 				}
 			}
