@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -37,8 +39,15 @@ public class DAOFactory
 		String nomUtilisateur;
 		String motDePasse;
 
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream fichierProperties = classLoader.getResourceAsStream(FICHIER_PROPERTIES);
+		InputStream fichierProperties = null;
+		try
+		{
+			fichierProperties = new FileInputStream("src/" + FICHIER_PROPERTIES);
+		}
+		catch(FileNotFoundException e1)
+		{
+			e1.printStackTrace();
+		}
 		if (fichierProperties == null)
 		{
 			throw new DAOConfigurationException("Le fichier properties " + FICHIER_PROPERTIES + " est introuvable.");
