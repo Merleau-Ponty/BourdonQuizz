@@ -2,13 +2,26 @@ package dao;
 
 import java.sql.SQLException;
 
+/**
+ * Classe gérant toutes les requêtes SQL ayant attrait à la table CONTENIR
+ * @author BourdonQuizz
+ */
 public class ContenirDAO extends DAOImpl
 {
+	/**
+	 * Constructeur de la classe ContenirDAO
+	 * @param fac le lien avec la classe DAOFactory
+	 * @see DAOFactory
+	 */
 	public ContenirDAO(DAOFactory fac)
 	{
 		dao = fac;
 	}
 	
+	/**
+	 * Méthode supprimant toutes les questions d'un quizz
+	 * @param idQuizz quizz auquel on va supprimer toutes les questions
+	 */
 	public void supprimerQuestions(int idQuizz)
 	{
 		try
@@ -27,6 +40,11 @@ public class ContenirDAO extends DAOImpl
 		}
 	}
 	
+	/**
+	 * Méthode permettant d'ajouter une question à un quizz
+	 * @param idQuestion identifiant de la question à ajouter
+	 * @param idQuizz identifiant du quizz auquel ajouter la question
+	 */
 	public void ajouterQuestionQuizz(int idQuestion, int idQuizz)
 	{
 		try
@@ -45,6 +63,11 @@ public class ContenirDAO extends DAOImpl
 		}
 	}
 	
+	/**
+	 * Méthode permettant d'obtenir le nombre de questions d'un quizz
+	 * @param idQuizz identifiant du quizz
+	 * @return un entier désignant le nombre de questions du quizz
+	 */
 	public Integer selecNbQuestionsQuizz(int idQuizz)
 	{
 		Integer resultat = null;

@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.Statement;
 
+/**
+ * Classe abstraite contenant différentes méthodes ayant attrait aux bases de données
+ * Cette classe sert de base à toutes les autres classes DAO (classe mère)
+ * @author BourdonQuizz
+ */
 public abstract class DAOImpl
 {
 	protected DAOFactory dao;
@@ -14,6 +19,16 @@ public abstract class DAOImpl
 	protected Connection conn;
 	protected ResultSet res;
 
+	/**
+	 * Méthode permettant d'exécuter une requête préparée dans la base de données
+	 * @param conn objet Connection pour l'interactivité avec la base de données
+	 * @param sql requête SQL à exécuter
+	 * @param returnGeneratedKeys booléen énoncant si l'on veut récupérer les identifiants générés par l'insertion
+	 * @param objets 
+	 * @return une instance de requête préparée PreparedStatement
+	 * @throws SQLException
+	 * @see PreparedStatement
+	 */
 	protected static PreparedStatement initialisationRequetePreparee(Connection conn, String sql,
 			boolean returnGeneratedKeys, Object... objets) throws SQLException
 	{
@@ -25,6 +40,15 @@ public abstract class DAOImpl
 		return req;
 	}
 	
+	/**
+	 * Méthode permettant d'exécuter une requête préparée dans la base de données
+	 * @param conn objet Connection pour l'interactivité avec la base de données
+	 * @param sql requête SQL à exécuter 
+	 * @param returnGeneratedKeys booléen énoncant si l'on veut récupérer les identifiants générés par l'insertion
+	 * @return une instance de requête préparée PreparedStatement
+	 * @throws SQLException
+	 * @see PreparedStatement
+	 */
 	protected static PreparedStatement initialisationRequetePreparee(Connection conn, String sql,
 			boolean returnGeneratedKeys) throws SQLException
 	{
@@ -32,6 +56,11 @@ public abstract class DAOImpl
 		return req;
 	}
 
+	/**
+	 * Méthode 
+	 * @param resultSet
+	 * @see ResultSet
+	 */
 	protected static void close(ResultSet resultSet)
 	{
 		if (resultSet != null)

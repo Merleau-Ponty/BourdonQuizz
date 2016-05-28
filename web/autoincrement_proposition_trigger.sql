@@ -1,7 +1,7 @@
 use bourdonroad;
 delimiter //
 
-create trigger autoincr_tentative before insert on proposition
+create trigger autoincr_proposition before insert on proposition
 for each row
 begin
 	declare lineCount int;

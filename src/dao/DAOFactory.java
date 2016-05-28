@@ -9,6 +9,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Classe gérant tous les accès à la base de données
+ * Elle permet de se connecter à la base grâce aux fichiers properties et d'instancier des objets DAO
+ * @author BourdonQuizz
+ */
 public class DAOFactory
 {
 	public static String weburl;
@@ -24,6 +29,12 @@ public class DAOFactory
 	private String username;
 	private String password;
 
+	/**
+	 * Unique constructeur de la classe DAOFactory
+	 * @param url url vers les fichiers Web
+	 * @param username nom d'utilisateur d'accès à la base de données
+	 * @param password mot de passe pour l'accès à la base de données
+	 */
 	public DAOFactory(String url, String username, String password)
 	{
 		this.url = url;
@@ -31,6 +42,11 @@ public class DAOFactory
 		this.password = password;
 	}
 
+	/**
+	 * Méthode statique lisant toutes les propriétés du fichier de configuration pour l'accès à la base de données et au serveur Web
+	 * @return une instance DAOFactory avec les champs de mot de passe, de nom d'utilisateur et d'url instanciés
+	 * @throws DAOConfigurationException
+	 */
 	public static DAOFactory getInstance() throws DAOConfigurationException
 	{
 		Properties properties = new Properties();
@@ -54,6 +70,7 @@ public class DAOFactory
 		}
 		try
 		{
+			// Lecture des différentes propriétés de configuration
 			properties.load(fichierProperties);
 			url = properties.getProperty(PROPERTY_URL);
 			weburl = properties.getProperty(PROPERTY_WEBURL);
@@ -76,42 +93,82 @@ public class DAOFactory
 		return new DAOFactory(url, nomUtilisateur, motDePasse);
 	}
 
+	/**
+	 * Méthode renvoyant un objet contenant toutes les informations de connexion à la base de données
+	 * @return un objet Connection grâce à l'url, le nom d'utilisateur et le mot de passe déjà récupérés
+	 * @throws SQLException
+	 * @see Connection
+	 */
 	public Connection getConnection() throws SQLException
 	{
 		return DriverManager.getConnection(url, username, password);
 	}
 	
-	// Méthodes retournant des instances DAO
+	/**
+	 * Méthode renvoyant une instance JoueurDAO pour toutes les requêtes concernant la table JOUEUR
+	 * @return un objet JoueurDAO
+	 * @see JoueurDAO
+	 */
 	public JoueurDAO getJoueur()
 	{
 		return new JoueurDAO(this);
 	}
 	
+	/**
+	 * Méthode renvoyant une instance QuestionDAO pour toutes les requêtes concernant la table QUESTION
+	 * @return un objet QuestionDAO
+	 * @see QuestionDAO
+	 */
 	public QuestionDAO getQuestion()
 	{
 		return new QuestionDAO(this);
 	}
 	
+	/**
+	 * Méthode renvoyant une instance PropositionDAO pour toutes les requêtes concernant la table PROPOSITION
+	 * @return un objet PropositionDAO
+	 * @see PropositionDAO
+	 */
 	public PropositionDAO getProposition()
 	{
 		return new PropositionDAO(this);
 	}
 	
+	/**
+	 * Méthode renvoyant une instance QuizzDAO pour toutes les requêtes concernant la table QUIZZ
+	 * @return un objet QuizzDAO
+	 * @see QuizzDAO
+	 */
 	public QuizzDAO getQuizz()
 	{
 		return new QuizzDAO(this);
 	}
 	
+	/**
+	 * Méthode renvoyant une instance ContenirDAO pour toutes les requêtes concernant la table CONTENIR
+	 * @return un objet ContenirDAO
+	 * @see ContenirDAO
+	 */
 	public ContenirDAO getContenir()
 	{
 		return new ContenirDAO(this);
 	}
 	
+	/**
+	 * Méthode renvoyant une instance TentativeDAO pour toutes les requêtes concernant la table TENTATIVE
+	 * @return un objet TentativeDAO
+	 * @see TentativeDAO
+	 */
 	public TentativeDAO getTentative()
 	{
 		return new TentativeDAO(this);
 	}
 	
+	/**
+	 * Méthode renvoyant une instance ReponseDAO pour toutes les requêtes concernant la table REPONSE
+	 * @return un objet ReponseDAO
+	 * @see ReponseDAO
+	 */
 	public ReponseDAO getReponse()
 	{
 		return new ReponseDAO(this);
