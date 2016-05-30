@@ -57,8 +57,8 @@ public abstract class DAOImpl
 	}
 
 	/**
-	 * Méthode 
-	 * @param resultSet
+	 * Méthode permettant de fermer un objet ayant été utilisé pour l'exécution de requêtes SQL
+	 * @param resultSet objet ResultSet utilisé pour récupérer les résultats des requêtes
 	 * @see ResultSet
 	 */
 	protected static void close(ResultSet resultSet)
@@ -76,6 +76,11 @@ public abstract class DAOImpl
 		}
 	}
 
+	/**
+	 * Méthode permettant de fermer un objet ayant été utilisé pour l'exécution de requêtes SQL
+	 * @param statement objet Statement ayant été utilisé pour la requête préparée
+	 * @see Statement
+	 */
 	protected static void close(Statement statement)
 	{
 		if (statement != null)
@@ -91,6 +96,11 @@ public abstract class DAOImpl
 		}
 	}
 
+	/**
+	 * Méthode permettant de fermer un objet ayant été utilisé pour l'exécution de requêtes SQL
+	 * @param connexion objet Connection permettant la connexion à la base de données
+	 * @see Connection
+	 */
 	public static void close(Connection connexion)
 	{
 		if (connexion != null)
@@ -106,12 +116,25 @@ public abstract class DAOImpl
 		}
 	}
 
+	/**
+	 * Méthode permettant de fermer plusieurs objets ayant été utilisés pour l'exécution de requêtes SQL
+	 * @param statement objet Statement ayant été utilisé pour la requête préparée
+	 * @param connexion objet Connection permettant la connexion à la base de données
+	 * @see Statement Connection 
+	 */
 	protected static void close(Statement statement, Connection connexion)
 	{
 		close(statement);
 		close(connexion);
 	}
 
+	/**
+	 * Méthode permettant de fermer plusieurs objets ayant été utilisés pour l'exécution de requêtes SQL
+	 * @param resultSet objet Statement ayant été utilisé pour la requête préparée
+	 * @param statement objet Statement ayant été utilisé pour la requête préparée
+	 * @param connexion objet Connection permettant la connexion à la base de données
+	 * @see ResultSet Statement Connection
+	 */
 	protected static void close(ResultSet resultSet, Statement statement, Connection connexion)
 	{
 		close(resultSet);

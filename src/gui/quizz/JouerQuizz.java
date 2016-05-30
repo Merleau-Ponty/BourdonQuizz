@@ -310,7 +310,7 @@ public class JouerQuizz extends JPanel
 					case "Question suivante":
 						initGUI();
 						validiteRep = new ArrayList<Boolean>();
-						applyChanges();
+						((MainFrame)SwingUtilities.getWindowAncestor(JouerQuizz.this)).applyChanges();
 						break;
 					case "Revenir au menu":
 						((MainFrame)SwingUtilities.getWindowAncestor(JouerQuizz.this)).changePanel(new MenuChoix());

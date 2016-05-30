@@ -5,13 +5,28 @@ import java.util.ArrayList;
 
 import metier.Joueur;
 
+/**
+ * Classe gérant toutes les méthodes concernant les requêtes de la table JOUEUR
+ * @author BourdonQuizz
+ */
 public class JoueurDAO extends DAOImpl
 {	
+	/**
+	 * Constructeur devant être appelé uniquement depuis la classe DAOFactory
+	 * @param fac instance de DAOFactory
+	 * @see DAOFactory
+	 */
 	public JoueurDAO(DAOFactory fac)
 	{
 		dao = fac;
 	}
 	
+	/**
+	 * Méthode permettant d'ajouter un joueur à la base de données
+	 * @param j instance de Joueur désignant le joueur à ajouter
+	 * @throws DAOException
+	 * @see Joueur
+	 */
 	public void insererJoueur(Joueur j) throws DAOException
 	{
 		Integer index = null;
@@ -36,6 +51,12 @@ public class JoueurDAO extends DAOImpl
 		}
 	}
 	
+	/**
+	 * Méthode permettant d'obtenir les informations d'un joueur en connaissant son login
+	 * @param login login du joueur
+	 * @return un objet Joueur retourné par la requête SQL
+	 * @see Joueur
+	 */
 	public Joueur selecJoueurParLogin(String login)
 	{
 		Joueur j = null;
@@ -58,6 +79,11 @@ public class JoueurDAO extends DAOImpl
 		return j;
 	}
 	
+	/**
+	 * Méthode inscrivant un joueur dans la base de données
+	 * @param champs un objet ArrayList contenant tous les champs du joueur
+	 * @return le login du joueur inscrit
+	 */
 	public String inscrireJoueur(ArrayList<String> champs)
 	{
 		String s;
@@ -80,6 +106,12 @@ public class JoueurDAO extends DAOImpl
 		return s;
 	}
 	
+	/**
+	 * Méthode 
+	 * @param login
+	 * @param mdp
+	 * @return
+	 */
 	public boolean seConnecter(String login, String mdp)
 	{
 		boolean valide = false;
