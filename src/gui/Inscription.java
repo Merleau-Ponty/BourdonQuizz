@@ -52,74 +52,52 @@ public class Inscription extends JPanel
 
 		JLabel lblPageDinscription = new JLabel("Inscription");
 		lblPageDinscription.setFont(new Font("Roboto", Font.PLAIN, 40));
-		GridBagConstraints gbc_lblPageDinscription = new GridBagConstraints();
-		gbc_lblPageDinscription.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPageDinscription.gridx = 8;
-		gbc_lblPageDinscription.gridy = 0;
-		add(lblPageDinscription, gbc_lblPageDinscription);
+		gbc.insets.bottom = 10;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		add(lblPageDinscription, gbc);
 
 		nom = new JTextField("Nom");
-		GridBagConstraints gbc_nom = new GridBagConstraints();
-		gbc_nom.insets = new Insets(0, 0, 5, 5);
-		gbc_nom.gridx = 8;
-		gbc_nom.gridy = 2;
-		add(nom, gbc_nom);
+		gbc.insets.bottom = 5;
+		gbc.gridy += 1;
+		add(nom, gbc);
 		nom.setColumns(10);
 
 		prenom = new JTextField("Prénom");
-		GridBagConstraints gbc_txtPrnom = new GridBagConstraints();
-		gbc_txtPrnom.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPrnom.gridx = 8;
-		gbc_txtPrnom.gridy = 3;
-		add(prenom, gbc_txtPrnom);
+		gbc.gridy += 1;
+		add(prenom, gbc);
 		prenom.setColumns(10);
 
 		telephone = new JTextField("Téléphone");
-		GridBagConstraints gbc_txtTlphone = new GridBagConstraints();
-		gbc_txtTlphone.insets = new Insets(0, 0, 5, 5);
-		gbc_txtTlphone.gridx = 8;
-		gbc_txtTlphone.gridy = 4;
-		add(telephone, gbc_txtTlphone);
+		gbc.gridy += 1;
+		add(telephone, gbc);
 		telephone.setColumns(10);
 
 		email = new JTextField("E-mail");
-		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
-		gbc_txtEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_txtEmail.gridx = 8;
-		gbc_txtEmail.gridy = 5;
-		add(email, gbc_txtEmail);
+		gbc.gridy += 1;
+		add(email, gbc);
 		email.setColumns(10);
 
 		service = new JTextField("Service");
-		GridBagConstraints gbc_txtService = new GridBagConstraints();
-		gbc_txtService.insets = new Insets(0, 0, 5, 5);
-		gbc_txtService.gridx = 8;
-		gbc_txtService.gridy = 6;
-		add(service, gbc_txtService);
+		gbc.gridy += 1;
+		add(service, gbc);
 		service.setColumns(10);
 
 		login = new JTextField("Login");
-		GridBagConstraints gbc_txtLogin = new GridBagConstraints();
-		gbc_txtLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_txtLogin.gridx = 8;
-		gbc_txtLogin.gridy = 7;
-		add(login, gbc_txtLogin);
+		gbc.gridy += 1;
+		add(login, gbc);
 		login.setColumns(10);
 
 		mdp = new JPasswordField("Mot de passe");
-		GridBagConstraints gbc_txtMotDePasse = new GridBagConstraints();
-		gbc_txtMotDePasse.insets = new Insets(0, 0, 20, 5);
-		gbc_txtMotDePasse.gridx = 8;
-		gbc_txtMotDePasse.gridy = 8;
-		add(mdp, gbc_txtMotDePasse);
+		gbc.gridy += 1;
+		gbc.insets.bottom = 10;
+		add(mdp, gbc);
 		mdp.setColumns(10);
 
 		valider = new JButton("Valider");
-		GridBagConstraints gbc_btnValider = new GridBagConstraints();
-		// gbc_btnValider.insets = new Insets(0, 0, 0, 0);
-		gbc_btnValider.gridx = 8;
-		gbc_btnValider.gridy = 11;
-		add(valider, gbc_btnValider);
+		gbc.insets.bottom = 0;
+		gbc.gridy += 1;
+		add(valider, gbc);
 		valider.addMouseListener(new CustomMouseListener());
 
 		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));

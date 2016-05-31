@@ -20,7 +20,6 @@ import gui.question.GestQuestion;
 import gui.quizz.ChoixJouerQuizz;
 import gui.quizz.ChoixModifQuizz;
 import gui.quizz.CreationQuizz;
-import gui.quizz.JouerQuizz;
 import metier.Joueur;
 
 public class MainFrame extends JFrame
