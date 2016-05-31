@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Classe métier correspondant à la table QUESTION
+ * @author BourdonQuizz
+ */
 public class Question
 {
 	private int id_question;
@@ -11,9 +15,18 @@ public class Question
 	private String photo;
 	private String corrige;
 	
+	/**
+	 * Constructeur vide
+	 */
 	public Question()
 	{}
 	
+	/**
+	 * Constructeur initialisant tous les attributs
+	 * @param enonce
+	 * @param corrige
+	 * @param photo
+	 */
 	public Question(String enonce, String corrige, String photo)
 	{
 		this.enonce = enonce;
@@ -22,6 +35,11 @@ public class Question
 	}
 	
 	// Méthodes
+	/**
+	 * Méthode permettant de créer un objet Question à partir d'un objet ResultSet (et donc d'un résultat de requête SQL)
+	 * @param r objet ResultSet provenant de la classe QuestionDAO
+	 * @return un objet Question comportant toutes les données de l'objet ResultSet
+	 */
 	public static Question genQuestion(ResultSet r)
 	{
 		Question q = new Question();
@@ -82,45 +100,75 @@ public class Question
 	}
 
 	// Getters & setters
+	/**
+	 * Getter de l'énoncé
+	 * @return l'énoncé de la question
+	 */
 	public String getEnonce()
 	{
 		return enonce;
 	}
 
+	/**
+	 * Getter de l'identifiant
+	 * @return l'identifiant de la question
+	 */
 	public int getIdQuestion()
 	{
 		return id_question;
 	}
 
+	/**
+	 * Getter de la photo
+	 * @return retourne une chaîne de caractères indiquant le chemin vers la photo
+	 */
 	public String getPhoto()
 	{
 		return photo;
 	}
 
+	/**
+	 * Getter corrigé
+	 * @return le corrigé de la question
+	 */
 	public String getCorrige()
 	{
 		return corrige;
 	}
 
+	/**
+	 * Setter de l'identifiant
+	 * @param id_question identifiant de la question
+	 */
 	public void setId_question(int id_question)
 	{
 		this.id_question = id_question;
 	}
 
+	/**
+	 * Setter de l'énoncé
+	 * @param enonce énoncé de la question
+	 */
 	public void setEnonce(String enonce)
 	{
 		this.enonce = enonce;
 	}
 
+	/**
+	 * Setter de la photo
+	 * @param photo chaîne de caractères indiquant le chemin vers la photo
+	 */
 	public void setPhoto(String photo)
 	{
 		this.photo = photo;
 	}
 
+	/**
+	 * Setter du corrigé
+	 * @param corrige corrigé de la question
+	 */
 	public void setCorrige(String corrige)
 	{
 		this.corrige = corrige;
 	}
-	
-	
 }
