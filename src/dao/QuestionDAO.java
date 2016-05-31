@@ -5,13 +5,26 @@ import java.util.ArrayList;
 
 import metier.Question;
 
+/**
+ * Classe contenant toutes les méthodes gérant les requêtes SQL de la table QUESTION
+ * @author BourdonQuizz
+ */
 public class QuestionDAO extends DAOImpl
 {
+	/**
+	 * Constructeur devant uniquement être appelé depuis la classe DAOFactory
+	 * @param fac instance de la classe DAOFactory
+	 * @see DAOFactory
+	 */
 	public QuestionDAO(DAOFactory fac)
 	{
 		dao = fac;
 	}
 	
+	/**
+	 * Méthode permettant d'obtenir le nombre total de questions
+	 * @return un entier désignant le nombre total de questions trouvées
+	 */
 	public int selecNbQuestions()
 	{
 		Integer countRes = null;
@@ -36,6 +49,11 @@ public class QuestionDAO extends DAOImpl
 		return countRes;
 	}
 	
+	/**
+	 * Méthode permettant d'ajouter une nouvelle question dans la base
+	 * @param q l'objet Question désignant la question à ajouter
+	 * @return un entier désignant l'identifiant de la question qui vient d'être ajoutée
+	 */
 	public Integer enregistrerQuestion(Question q)
 	{
 		Integer index = null;
@@ -59,6 +77,10 @@ public class QuestionDAO extends DAOImpl
 		return index;
 	}
 	
+	/**
+	 * Méthode permettant de sélectionner toutes les questions existantes
+	 * @return un objet ArrayList contenant des objets Question correspondant à chaque question trouvée
+	 */
 	public ArrayList<Question> selecToutesQuestions()
 	{
 		ArrayList<Question> a = new ArrayList<Question>();
@@ -83,6 +105,11 @@ public class QuestionDAO extends DAOImpl
 		return a;
  	}
 	
+	/**
+	 * Méthode permettant de sélectionner les questions ajoutées à un quizz précis
+	 * @param idQuizz identifiant du quizz
+	 * @return un objet ArrayList contenant des objets Question correspondant chacun à une question
+	 */
 	public ArrayList<Question> selecQuestionsSupprimablesQuizz(int idQuizz)
 	{
 		ArrayList<Question> a = new ArrayList<Question>();
@@ -107,6 +134,11 @@ public class QuestionDAO extends DAOImpl
 		return a;
 	}
 	
+	/**
+	 * Méthode permettant de sélectionner une question en connaissant son identifiant
+	 * @param idQ identifiant de la question
+	 * @return un objet Question désignant la question trouvée
+	 */
 	public Question selecParId(int idQ)
 	{
 		Question q = null;
@@ -129,6 +161,11 @@ public class QuestionDAO extends DAOImpl
 		return q;
 	}
 	
+	/**
+	 * Méthode permettant de mettre à jour une question grâce à son identifiant
+	 * @param q objet Question contenant les informations de la question à mettre à jour
+	 * @param idQ identifiant de la question
+	 */
 	public void update(Question q, int idQ)
 	{
 		try

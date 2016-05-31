@@ -107,10 +107,10 @@ public class JoueurDAO extends DAOImpl
 	}
 	
 	/**
-	 * Méthode 
-	 * @param login
-	 * @param mdp
-	 * @return
+	 * Méthode déterminant si les identifiants de connexion sont corrects
+	 * @param login nom d'utilisateur de la personne souhaitant se connecter
+	 * @param mdp mot de passe permettant de se connecter
+	 * @return true si le login et le mot de passe coincident, sinon false
 	 */
 	public boolean seConnecter(String login, String mdp)
 	{

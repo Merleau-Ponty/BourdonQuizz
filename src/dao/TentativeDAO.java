@@ -5,13 +5,29 @@ import java.text.SimpleDateFormat;
 
 import metier.Tentative;
 
+/**
+ * Classe contenant toutes les méthodes gérant les requêtes SQL de la table TENTATIVE
+ * @author BourdonQuizz
+ */
 public class TentativeDAO extends DAOImpl
 {
+	/**
+	 * Constructeur devant uniquement être appelé depuis la classe DAOFactory
+	 * @param dao instance de la classe DAOFactory
+	 * @see DAOFactory
+	 */
 	public TentativeDAO(DAOFactory dao)
 	{
 		this.dao = dao;
 	}
 	
+	/**
+	 * Méthode permettant de créer une nouvelle tentative
+	 * @param t objet Tentative désignant la tentative
+	 * @param idJoueur identifiant du joueur faisant la tentative
+	 * @param idQuizz identifiant du quizz de la tentative
+	 * @return un entier désignant l'identifiant de la tentative ajoutée
+	 */
 	public int ajouter(Tentative t, int idJoueur, int idQuizz)
 	{
 		try
@@ -33,6 +49,10 @@ public class TentativeDAO extends DAOImpl
 		return getLastIdTentative();
 	}
 	
+	/**
+	 * Méthode permettant de récupérer l'identifiant de la dernière tentative ajoutée
+	 * @return un entier désignant l'identifiant de la dernière tentative ajoutée
+	 */
 	public int getLastIdTentative()
 	{
 		Integer res = null;
@@ -55,6 +75,10 @@ public class TentativeDAO extends DAOImpl
 		return res;
 	}
 	
+	/**
+	 * Méthode permettant de mettre à jour le score d'une tentative en l'incrémentant
+	 * @param idTentative identifiant de la tentative
+	 */
 	public void updateScore(int idTentative)
 	{
 		try

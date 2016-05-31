@@ -5,13 +5,26 @@ import java.util.ArrayList;
 
 import metier.Question;
 
+/**
+ * Classe contenant toutes les méthodes gérant les requêtes SQL de la table QUIZZ
+ * @author BourdonQuizz
+ */
 public class QuizzDAO extends DAOImpl
 {
+	/**
+	 * Constructeur devant uniquement être appelé depuis la classe DAOFactory
+	 * @param fac instance de la classe DAOFactory
+	 * @see DAOFactory
+	 */
 	public QuizzDAO(DAOFactory fac)
 	{
 		dao = fac;
 	}
 
+	/**
+	 * Méthode permettant de créer un nouveau quizz
+	 * @return un entier désignant l'identifiant du quizz créé
+	 */
 	public int creerQuizz()
 	{
 		Integer idQuizz = null;
@@ -35,6 +48,10 @@ public class QuizzDAO extends DAOImpl
 		return idQuizz;
 	}
 
+	/**
+	 * Méthode permettant de sélectionner tous les identifiants de quizz existants
+	 * @return un objet ArrayList contenant des entiers désignant tous les identifiants des quizzs
+	 */
 	public ArrayList<Integer> selectTousQuizz()
 	{
 		ArrayList<Integer> a = new ArrayList<Integer>();
@@ -57,6 +74,11 @@ public class QuizzDAO extends DAOImpl
 		return a;
 	}
 
+	/**
+	 * Méthode permettant de sélectionner toutes les questions d'un quizz
+	 * @param idQuizz identifiant du quizz concerné
+	 * @return un objet ArrayList contenant des objets Question correspondant chacun à une question trouvée
+	 */
 	public ArrayList<Question> selecQuestionsQuizz(int idQuizz)
 	{
 		ArrayList<Question> a = new ArrayList<Question>();

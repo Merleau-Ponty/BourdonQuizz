@@ -47,14 +47,8 @@ public class Inscription extends JPanel
 
 	private void initGUI()
 	{
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[15];
-		gridBagLayout.rowHeights = new int[13];
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
-		setLayout(gridBagLayout);
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		JLabel lblPageDinscription = new JLabel("Inscription");
 		lblPageDinscription.setFont(new Font("Roboto", Font.PLAIN, 40));
