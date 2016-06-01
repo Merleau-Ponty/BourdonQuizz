@@ -53,9 +53,9 @@ public class Joueur
 	 * Méthode permettant de créer un objet Joueur à partir d'un objet ResultSet (et donc d'un résultat de requête SQL)
 	 * @param r objet ResultSet provenant de la classe JoueurDAO
 	 * @return un objet Joueur comportant toutes les données de l'objet ResultSet
-	 * @throws SQLException
+	 * @throws SQLException lance une exception SQL
 	 * @see ResultSet
-	 * @see JoueurDAO
+	 * @see dao.JoueurDAO
 	 */
 	public static Joueur genJoueur(ResultSet r) throws SQLException
 	{

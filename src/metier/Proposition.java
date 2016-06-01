@@ -15,8 +15,8 @@ public class Proposition
 	
 	/**
 	 * Constructeur renseignant les valeurs de tous les attributs hormis l'identifiant
-	 * @param enonce 
-	 * @param valide
+	 * @param enonce enonce de la propositon
+	 * @param valide booléen désignant si la proposition doit être cochée ou non
 	 */
 	public Proposition(String enonce, Boolean valide)
 	{

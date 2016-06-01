@@ -24,7 +24,7 @@ public class JoueurDAO extends DAOImpl
 	/**
 	 * Méthode permettant d'ajouter un joueur à la base de données
 	 * @param j instance de Joueur désignant le joueur à ajouter
-	 * @throws DAOException
+	 * @throws DAOException lance une exception lors de l'exécution d'une méthode DAO
 	 * @see Joueur
 	 */
 	public void insererJoueur(Joueur j) throws DAOException

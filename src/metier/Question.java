@@ -23,9 +23,9 @@ public class Question
 	
 	/**
 	 * Constructeur initialisant tous les attributs
-	 * @param enonce
-	 * @param corrige
-	 * @param photo
+	 * @param enonce enonce de la question
+	 * @param corrige corrigé de la question
+	 * @param photo chemin indiquant l'image utilisée pour la question
 	 */
 	public Question(String enonce, String corrige, String photo)
 	{

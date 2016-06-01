@@ -45,7 +45,7 @@ public class DAOFactory
 	/**
 	 * Méthode statique lisant toutes les propriétés du fichier de configuration pour l'accès à la base de données et au serveur Web
 	 * @return une instance DAOFactory avec les champs de mot de passe, de nom d'utilisateur et d'url instanciés
-	 * @throws DAOConfigurationException
+	 * @throws DAOConfigurationException lance une exception au niveau de la configuration du fichier properties
 	 */
 	public static DAOFactory getInstance() throws DAOConfigurationException
 	{
@@ -96,7 +96,7 @@ public class DAOFactory
 	/**
 	 * Méthode renvoyant un objet contenant toutes les informations de connexion à la base de données
 	 * @return un objet Connection grâce à l'url, le nom d'utilisateur et le mot de passe déjà récupérés
-	 * @throws SQLException
+	 * @throws SQLException lance une exception SQL
 	 * @see Connection
 	 */
 	public Connection getConnection() throws SQLException

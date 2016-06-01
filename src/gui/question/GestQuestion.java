@@ -37,6 +37,7 @@ import org.apache.http.impl.client.HttpClients;
 
 import dao.DAOFactory;
 import dao.PropositionDAO;
+import dao.QuestionDAO;
 import gui.MenuChoix;
 import main.MainFrame;
 import metier.Proposition;
@@ -397,12 +398,22 @@ public class GestQuestion extends JPanel
 				{
 				case "Uploader une image":
 					JFileChooser browse = new JFileChooser();
-					FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Image (.jpg, .jpeg, .png)", "jpg", "jpeg", "png");
 					browse.setFileFilter(filter);
 					if(browse.showOpenDialog(GestQuestion.this) == JFileChooser.APPROVE_OPTION)
 					{
 						File f = browse.getSelectedFile();
-						int idQ = DAOFactory.getInstance().getQuestion().selecNbQuestions() + 1;
+						Integer idQ = null;
+						QuestionDAO daoF = DAOFactory.getInstance().getQuestion();
+						if(valider.getText().equals("Mettre à jour la question et ses réponses"))
+						{
+							String s = daoF.selecPhotoWithQID(idQModification);
+							idQ = Integer.parseInt(s.substring(0, s.lastIndexOf('.')));
+						}
+						else 
+						{
+							idQ = daoF.selecMaxNbQuestions() + 1;
+						}
 						sendPostImage(f, idQ);
 						String name = f.getName();
 						upload = idQ + name.substring(name.lastIndexOf('.'));

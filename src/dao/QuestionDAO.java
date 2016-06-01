@@ -22,20 +22,20 @@ public class QuestionDAO extends DAOImpl
 	}
 	
 	/**
-	 * Méthode permettant d'obtenir le nombre total de questions
-	 * @return un entier désignant le nombre total de questions trouvées
+	 * Méthode permettant d'obtenir l'identifiant le plus élevé
+	 * @return un entier désignant l'identifiant le plus élevé de toutes les questions
 	 */
-	public int selecNbQuestions()
+	public int selecMaxNbQuestions()
 	{
 		Integer countRes = null;
 		try
 		{
 			conn = dao.getConnection();
-			prep = initialisationRequetePreparee(conn, "select count(*) from QUESTION", false);
+			prep = initialisationRequetePreparee(conn, "select max(ID_QUESTION) + 1 as max from QUESTION", false);
 			res = prep.executeQuery();
 			if(res.next())
 			{
-				countRes = res.getInt("count(*)");
+				countRes = res.getInt("max");
 			}
 		}
 		catch(SQLException e)
@@ -183,5 +183,32 @@ public class QuestionDAO extends DAOImpl
 		{
 			close(prep, conn);
 		}
+	}
+	
+	/**
+	 * Méthode permettant de récupérer l'url d'une photo à partir de l'identifiant de la question
+	 * @param idQuestion identifiant de la question
+	 * @return un objet String désignant l'URL de la photo
+	 */
+	public String selecPhotoWithQID(int idQuestion)
+	{
+		String url = null;
+		try
+		{
+			conn = dao.getConnection();
+			prep = initialisationRequetePreparee(conn, "select PHOTO from QUESTION where ID_QUESTION = ?", false, idQuestion);
+			res = prep.executeQuery();
+			if(res.next())
+				url = res.getString(1);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			close(res, prep, conn);
+		}
+		return url;
 	}
 }

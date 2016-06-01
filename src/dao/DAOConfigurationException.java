@@ -17,7 +17,7 @@ public class DAOConfigurationException extends RuntimeException
 	
 	/**
 	 * Constructeur de l'exception avec un message et une cause
-	 * @param message 
+	 * @param message message en particulier à mentionner
 	 * @param cause exception en particulier à mentionner
 	 */
 	public DAOConfigurationException(String message, Throwable cause)
