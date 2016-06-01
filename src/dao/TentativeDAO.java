@@ -96,4 +96,56 @@ public class TentativeDAO extends DAOImpl
 			close(prep, conn);
 		}
 	}
+	
+	/**
+	 * Méthode retournant le nombre total de tentatives
+	 * @return nombre total de tentatives
+	 */
+	public int selecNbTentatives()
+	{
+		Integer nbT = null;
+		try
+		{
+			conn = dao.getConnection();
+			prep = initialisationRequetePreparee(conn, "select count(*) from TENTATIVE", false);
+			res = prep.executeQuery();
+			if(res.next())
+				nbT = res.getInt(1);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			close(res, prep, conn);
+		}
+		return nbT;
+	}
+	
+	/**
+	 * Méthode permettant d'obtenir le score moyen des tentatives
+	 * @return le score moyen
+	 */
+	public double scoreMoyen()
+	{
+		Double scoreMoyen = null;
+		try
+		{
+			conn = dao.getConnection();
+			prep = initialisationRequetePreparee(conn, "select avg(SCORE) from TENTATIVE", false);
+			res = prep.executeQuery();
+			if(res.next())
+				scoreMoyen = res.getDouble(1);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			close(res, prep, conn);
+		}
+		return scoreMoyen;
+	}
 }

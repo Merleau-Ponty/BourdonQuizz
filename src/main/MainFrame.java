@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import gui.InfosCreateurs;
 import gui.MenuChoix;
+import gui.Statistiques;
 import gui.accueil.Connexion;
 import gui.accueil.Inscription;
 import gui.question.ChoixModifQuestion;
@@ -251,6 +252,9 @@ public class MainFrame extends JFrame
 					break;
 				case "Faire un quizz":
 					changePanel(new ChoixJouerQuizz());
+					break;
+				case "Visualiser les résultats":
+					changePanel(new Statistiques());
 					break;
 				case "Se déconnecter":
 					changeConnectedStateDisconnected();

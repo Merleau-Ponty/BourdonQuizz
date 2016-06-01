@@ -133,4 +133,30 @@ public class JoueurDAO extends DAOImpl
 		}
 		return valide;
 	}
+	
+	/**
+	 * Méthode permettant d'obtenir le nombre total de joueurs
+	 * @return le nombre total de joueurs
+	 */
+	public int selecNbJoueurs()
+	{
+		Integer nbJ = null;
+		try
+		{
+			conn = dao.getConnection();
+			prep = initialisationRequetePreparee(conn, "select count(*) from JOUEUR", false);
+			res = prep.executeQuery();
+			if(res.next())
+				nbJ = res.getInt(1);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			close(res, prep, conn);
+		}
+		return nbJ;
+	}
 }

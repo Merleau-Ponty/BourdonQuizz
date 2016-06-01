@@ -1,5 +1,6 @@
 dao
 gui
+gui.accueil
 gui.question
 gui.quizz
 main

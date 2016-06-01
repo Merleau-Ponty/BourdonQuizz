@@ -121,7 +121,7 @@ public class MenuChoix extends JPanel
 			}
 			else if(src == resultats)
 			{
-				
+				gui.changePanel(new Statistiques());
 			}
 			else if(src == jouerQuizz)
 			{
