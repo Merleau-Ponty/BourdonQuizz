@@ -1,6 +1,7 @@
 package gui.quizz;
 
 import java.awt.Choice;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,6 +30,7 @@ public class CreationQuizz extends JPanel
 	private ArrayList<Question> listeToutesQuestions = new ArrayList<Question>();
 	private ArrayList<Question> listeQAAjouter = new ArrayList<Question>();
 	private JLabel messageConfirmation;
+	private boolean displayError = false;
 	
 	public CreationQuizz()
 	{
@@ -65,7 +67,7 @@ public class CreationQuizz extends JPanel
 		ajouterQ.addMouseListener(new CustomMouseListener());
 		add(ajouterQ, gbc);
 		gbc.gridy += 1;
-		gbc.insets = new Insets(20, 0, 0, 0);
+		gbc.insets.top = 20;
 		JButton valider = new JButton("Créer le quizz");
 		valider.addMouseListener(new CustomMouseListener());
 		add(valider, gbc);
@@ -117,13 +119,31 @@ public class CreationQuizz extends JPanel
 					}
 					break;
 				case "Créer le quizz":
-					DAOFactory dao = DAOFactory.getInstance();
-					int idQuizz = dao.getQuizz().creerQuizz();
-					for(Question q : listeQAAjouter)
+					if(listeQAAjouter.size() == 0)
 					{
-						dao.getContenir().ajouterQuestionQuizz(q.getIdQuestion(), idQuizz);
+						if(!displayError)
+						{
+							GridBagConstraints gbc = new GridBagConstraints();
+							gbc.gridx = 0;
+							gbc.gridy = 5;
+							gbc.insets.top = 5;
+							JLabel erreur = new JLabel("Veuillez ajouter au moins une question");
+							erreur.setForeground(Color.RED);
+							add(erreur, gbc);
+							displayError = true;
+							((MainFrame)SwingUtilities.getWindowAncestor(CreationQuizz.this)).applyChanges();
+						}
 					}
-					((MainFrame)SwingUtilities.getWindowAncestor(CreationQuizz.this)).changePanel(new MenuChoix());
+					else 
+					{
+						DAOFactory dao = DAOFactory.getInstance();
+						int idQuizz = dao.getQuizz().creerQuizz();
+						for(Question q : listeQAAjouter)
+						{
+							dao.getContenir().ajouterQuestionQuizz(q.getIdQuestion(), idQuizz);
+						}
+						((MainFrame)SwingUtilities.getWindowAncestor(CreationQuizz.this)).changePanel(new MenuChoix());
+					}
 					break;
 			}
 		}
