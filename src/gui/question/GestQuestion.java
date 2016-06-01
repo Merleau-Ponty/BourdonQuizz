@@ -422,6 +422,7 @@ public class GestQuestion extends JPanel
 						gbc.gridy = 3;
 						gbc.insets = new Insets(0, -140, 0, 0);
 						JLabel validationUpload = new JLabel("Upload effectué");
+						GestQuestion.this.remove(getComponentAt(1, 3));
 						validationUpload.setForeground(Color.DARK_GRAY);
 						GestQuestion.this.add(validationUpload, gbc);
 						((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
@@ -436,6 +437,8 @@ public class GestQuestion extends JPanel
 					if(isUploaded && validPropositions())
 					{
 						DAOFactory daoF = DAOFactory.getInstance();
+						upload = (upload.substring(upload.lastIndexOf('.') + 1, upload.length()).equals("jpg") ? 
+								upload.substring(0, upload.lastIndexOf('.') + 1) + "jpeg" : upload);
 						int idQ = daoF.getQuestion()
 								.enregistrerQuestion(new Question(libelle.getText(), corrige.getText(), upload));
 						PropositionDAO propDAO = daoF.getProposition();
@@ -456,6 +459,8 @@ public class GestQuestion extends JPanel
 					if(isUploaded && validPropositions())
 					{
 						DAOFactory daoF = DAOFactory.getInstance();
+						upload = (upload.substring(upload.lastIndexOf('.') + 1, upload.length()).equals("jpg") ? 
+								upload.substring(0, upload.lastIndexOf('.') + 1) + "jpeg" : upload);
 						daoF.getQuestion().update(new Question(libelle.getText(), corrige.getText(), upload), idQModification);
 						int i = 0;
 						PropositionDAO propDAO = daoF.getProposition();

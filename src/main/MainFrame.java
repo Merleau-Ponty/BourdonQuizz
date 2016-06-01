@@ -11,10 +11,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import gui.Connexion;
 import gui.InfosCreateurs;
-import gui.Inscription;
 import gui.MenuChoix;
+import gui.accueil.Connexion;
+import gui.accueil.Inscription;
 import gui.question.ChoixModifQuestion;
 import gui.question.GestQuestion;
 import gui.quizz.ChoixJouerQuizz;

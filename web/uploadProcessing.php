@@ -21,11 +21,6 @@ try
             throw new RuntimeException('Erreur inconnue');
     }
 
-    if ($_FILES['upfile']['size'] > 1000000) 
-    {
-        throw new RuntimeException('Fichier trop volumineux');
-    }
-
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     if (false === $ext = array_search(
         $finfo->file($_FILES['upfile']['tmp_name']),
