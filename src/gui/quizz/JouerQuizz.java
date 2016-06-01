@@ -268,9 +268,7 @@ public class JouerQuizz extends JPanel
 			i++;
 		}
 		if(res)
-		{
 			dao.getTentative().updateScore(idTentative);
-		}
 		JButton comp = (JButton)getComponent(4);
 		if(indiceQuestion + 1 == listeQuestions.size())
 			comp.setText("Revenir au menu");

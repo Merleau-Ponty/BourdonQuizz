@@ -22,6 +22,11 @@ import gui.quizz.ChoixModifQuizz;
 import gui.quizz.CreationQuizz;
 import metier.Joueur;
 
+/**
+ * Classe "mère" représentant la JFrame à laquelle viendra se greffer un JPanel qui sera changé. 
+ * Cette classe fait en fin de compte office de controleur et est le squelette du programme.
+ * @author BourdonQuizz
+ */
 public class MainFrame extends JFrame
 {		
 	private JMenuBar barre = new JMenuBar();
@@ -30,12 +35,19 @@ public class MainFrame extends JFrame
 	private JMenuItem userInfo = new JMenuItem("Non connecté");
 	private JMenu aide = new JMenu("Aide");
 	
+	/**
+	 * Constructeur permettant de créer et initialiser la JFrame
+	 * @see JFrame
+	 */
 	public MainFrame() 
 	{
 		super("Application code de la route");
 		initGUI();
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique avec les menus et le JPanel d'accueil
+	 */
 	private void initGUI()
 	{
 		setLayout(new BorderLayout());
@@ -61,6 +73,11 @@ public class MainFrame extends JFrame
 		setVisible(true);
 	}
 	
+	/**
+	 * Méthode permettant de modifier les menus de la JMenuBar selon le type d'utilisateur connecté
+	 * @param login nom d'utilisateur du joueur se connectant
+	 * @param j objet Joueur correspondant au joueur se connectant
+	 */
 	public void changeToMenuChoix(String login, Joueur j)
 	{
 		getContentPane().removeAll();
@@ -73,6 +90,11 @@ public class MainFrame extends JFrame
 		applyChanges();
 	}
 	
+	/**
+	 * Méthode permettant de changer l'objet JPanel à afficher
+	 * @param pan objet JPanel à afficher
+	 * @see JPanel
+	 */
 	public void changePanel(JPanel pan)
 	{
 		getContentPane().removeAll();
@@ -80,6 +102,9 @@ public class MainFrame extends JFrame
 		applyChanges();
 	}
 	
+	/**
+	 * Méthode permettant de valider les changements graphiques opérés et de redimensionner la fenêtre
+	 */
 	public void applyChanges()
 	{
 		revalidate();
@@ -87,6 +112,9 @@ public class MainFrame extends JFrame
 		pack();
 	}
 	
+	/**
+	 * Méthode changeant les menus de la JMenuBar si l'utilisateur est connectée en tant qu'administrateur
+	 */
 	private void changeConnectedStateAdmin()
 	{
 		menu.removeAll();
@@ -104,6 +132,9 @@ public class MainFrame extends JFrame
 		initListeners(true);
 	}
 	
+	/**
+	 * Méthode changeant les menus de la JMenuBar si l'utilisateur est connectée en tant que membre
+	 */
 	private void changeConnectedStateMember()
 	{
 		menu.removeAll();
@@ -113,6 +144,9 @@ public class MainFrame extends JFrame
 		initListeners(true);
 	}
 	
+	/**
+	 * Méthode permettant de changer le menu conformément à si l'utilisateur est connecté ou non
+	 */
 	private void changeConnectedStateDisconnected()
 	{
 		menu.removeAll();
@@ -125,12 +159,20 @@ public class MainFrame extends JFrame
 		initListeners(false);
 	}
 	
+	/**
+	 * Méthode permettant d'afficher le nom d'utilisateur de la personne connectée
+	 * @param login nom d'utilisateur de la personne connectée
+	 */
 	private void modifyPlayerInfo(String login)
 	{
 		userInfo.setEnabled(true);
 		userInfo.setText(login);
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser les listeners
+	 * @param menuChoix booléen désignant si oui ou non l'utilisateur est connecté
+	 */
 	private void initListeners(boolean menuChoix)
 	{
 		for(Component c : barre.getComponents())
@@ -179,6 +221,10 @@ public class MainFrame extends JFrame
 	}
 	
 	// Gestionnaire d'évènements
+	/**
+	 * Classe interne étant l'écouteur d'évènements de la JMenuBar
+	 * @author BourdonQuizz
+	 */
 	private class CustomActionListener extends AbstractAction
 	{
 		public void actionPerformed(ActionEvent e)
