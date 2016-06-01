@@ -13,6 +13,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -50,6 +53,7 @@ public class GestQuestion extends JPanel
 	private JTextArea corrige;
 	private JButton valider;
 	private JButton ajouterProp;
+	private JLabel erreurUpload;
 	private ArrayList<JTextField> props = new ArrayList<JTextField>();
 	private ArrayList<JCheckBox> propsCheck = new ArrayList<JCheckBox>();
 
@@ -421,13 +425,22 @@ public class GestQuestion extends JPanel
 						gbc.gridx = 1;
 						gbc.gridy = 3;
 						gbc.insets = new Insets(0, -140, 0, 0);
-						JLabel validationUpload = new JLabel("Upload effectué");
-						GestQuestion.this.remove(getComponentAt(1, 3));
-						validationUpload.setForeground(Color.DARK_GRAY);
-						GestQuestion.this.add(validationUpload, gbc);
+						if(erreurUpload != null)
+							GestQuestion.this.remove(erreurUpload);
+						erreurUpload = new JLabel("Upload effectué");
+						erreurUpload.setForeground(Color.DARK_GRAY);
+						isUploaded = true;
+						// Vérification de la taille du fichier
+						if(f.length() > 830000)
+						{
+							erreurUpload.setForeground(Color.RED);
+							erreurUpload.setText("Fichier trop gros");
+							isUploaded = false;
+						}
+						GestQuestion.this.add(erreurUpload, gbc);
 						((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).applyChanges();
 						setAreaCustomPreferedSize();
-						isUploaded = true;
+						
 					}
 					break;
 				case "Ajouter une proposition":
@@ -478,6 +491,10 @@ public class GestQuestion extends JPanel
 							i++;
 						}
 						((MainFrame) SwingUtilities.getWindowAncestor(GestQuestion.this)).changePanel(new MenuChoix());
+					}
+					else 
+					{
+						displayError();
 					}
 					break;
 				}

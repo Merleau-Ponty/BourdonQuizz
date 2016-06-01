@@ -57,8 +57,9 @@ public class ChoixJouerQuizz extends JPanel
 	{
 		public void mouseClicked(MouseEvent e)
 		{
+			String s = ((JButton)e.getSource()).getText();
 			((MainFrame)SwingUtilities.getWindowAncestor(ChoixJouerQuizz.this)).changePanel(
-					new JouerQuizz(Integer.parseInt(((JButton)e.getSource()).getText().substring(8, 9))));
+					new JouerQuizz(Integer.parseInt(s.substring(8, s.lastIndexOf('(') - 1))));
 		}
 	}
 }
