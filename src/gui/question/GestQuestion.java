@@ -13,9 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -54,6 +51,7 @@ public class GestQuestion extends JPanel
 	private JButton valider;
 	private JButton ajouterProp;
 	private JLabel erreurUpload;
+	private JLabel erreurValidation;
 	private ArrayList<JTextField> props = new ArrayList<JTextField>();
 	private ArrayList<JCheckBox> propsCheck = new ArrayList<JCheckBox>();
 
@@ -64,7 +62,7 @@ public class GestQuestion extends JPanel
 	private String upload;
 	private boolean isErrorDisplayed = false;
 	private boolean isUploaded = false;
-
+	
 	public GestQuestion()
 	{
 		initGUI();
@@ -169,7 +167,7 @@ public class GestQuestion extends JPanel
 		addMouseListener(new CustomMouseListener());
 	}
 
-	private void ajouterProposition()
+	public void ajouterProposition()
 	{
 		String[] lettresProp = { "B", "C", "D" };
 		if(props.size() <= 3)
@@ -280,12 +278,12 @@ public class GestQuestion extends JPanel
 	{
 		if(!isErrorDisplayed)
 		{
-			JLabel lib = new JLabel("Choisissez une image ou renseignez toutes les propositions");
-			lib.setForeground(Color.RED);
+			erreurValidation = new JLabel("Choisissez une image ou renseignez toutes les propositions (2 min.)");
+			erreurValidation.setForeground(Color.RED);
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.gridx = 0;
 			gbc.gridy = 6 + props.size();
-			add(lib, gbc);
+			add(erreurValidation, gbc);
 			isErrorDisplayed = true;
 			((MainFrame) SwingUtilities.getWindowAncestor(this)).applyChanges();
 
@@ -431,7 +429,7 @@ public class GestQuestion extends JPanel
 						erreurUpload.setForeground(Color.DARK_GRAY);
 						isUploaded = true;
 						// Vérification de la taille du fichier
-						if(f.length() > 830000)
+						if(f.length() > 870358)
 						{
 							erreurUpload.setForeground(Color.RED);
 							erreurUpload.setText("Fichier trop gros");
@@ -444,10 +442,12 @@ public class GestQuestion extends JPanel
 					}
 					break;
 				case "Ajouter une proposition":
+					if(isErrorDisplayed)
+						remove(erreurValidation);
 					ajouterProposition();
 					break;
 				case "Enregistrer la question et ses réponses":
-					if(isUploaded && validPropositions())
+					if(isUploaded && validPropositions() && props.size() >= 2)
 					{
 						DAOFactory daoF = DAOFactory.getInstance();
 						upload = (upload.substring(upload.lastIndexOf('.') + 1, upload.length()).equals("jpg") ? 
