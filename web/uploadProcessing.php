@@ -21,6 +21,11 @@ try
             throw new RuntimeException('Erreur inconnue');
     }
 
+    if ($_FILES['upfile']['size'] > 1000000) 
+    {
+        throw new RuntimeException('Fichier trop volumineux');
+    }
+
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     if (false === $ext = array_search(
         $finfo->file($_FILES['upfile']['tmp_name']),
@@ -35,11 +40,10 @@ try
         throw new RuntimeException('Format du fichier invalide');
     }
 
-    if (!move_uploaded_file($_FILES['upfile']['tmp_name'], sprintf('./img/%s.%s', $_GET['q_id'], $ext))) 
+    if(!move_uploaded_file($_FILES['upfile']['tmp_name'], sprintf('./img/%s.%s', $_GET['q_id'], $ext))) 
     {
         throw new RuntimeException('Impossible de bouger le fichier uploadé');
     }
-
     echo 'Le fichier a été uploadé avec succès';
 } 
 catch (RuntimeException $e) 

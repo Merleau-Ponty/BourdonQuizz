@@ -55,6 +55,7 @@ public class GestQuestion extends JPanel
 	private ArrayList<JTextField> props = new ArrayList<JTextField>();
 	private ArrayList<JCheckBox> propsCheck = new ArrayList<JCheckBox>();
 
+	ArrayList<String> enoncesPropAvantModif;
 	int nbQuestionsModifBase;
 	private Dimension areaPreferredSize;
 	private Dimension textPreferredSize;
@@ -80,6 +81,7 @@ public class GestQuestion extends JPanel
 		upload = q.getPhoto();
 		ArrayList<Proposition> pArrayList = dao.getProposition().selecPropQuestion(idQ);
 		nbQuestionsModifBase = pArrayList.size();
+		enoncesPropAvantModif = new ArrayList<String>();
 		for(int i = 0; i < pArrayList.size(); i++)
 		{
 			if(i >= 1)
@@ -91,6 +93,7 @@ public class GestQuestion extends JPanel
 				props.get(i).setText(pArrayList.get(i).getEnonce());
 			}
 			propsCheck.get(i).setSelected(pArrayList.get(i).getValide());
+			enoncesPropAvantModif.add(pArrayList.get(i).getEnonce());
 		}
 		for(Component c : getComponents())
 		{
@@ -481,7 +484,7 @@ public class GestQuestion extends JPanel
 						{
 							if(i + 1 <= nbQuestionsModifBase)
 							{
-								int idProp = propDAO.selecIdPropParEnonceEtQuestion(j.getText(), idQModification);
+								int idProp = propDAO.selecIdPropParEnonceEtQuestion(enoncesPropAvantModif.get(i), idQModification);
 								propDAO.updateProposition(j.getText(), idQModification, propsCheck.get(i).isSelected(), idProp);
 							}
 							else
