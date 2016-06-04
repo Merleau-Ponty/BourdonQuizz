@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import dao.DAOFactory;
 
 /**
- * Classe affichant différents statistiques obtenus de la base de données
+ * Classe affichant différents statistiques obtenues de la base de données
  * @author BourdonQuizz
  */
 public class Statistiques extends JPanel

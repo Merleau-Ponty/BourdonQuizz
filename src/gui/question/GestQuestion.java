@@ -43,6 +43,10 @@ import main.MainFrame;
 import metier.Proposition;
 import metier.Question;
 
+/**
+ * Classe définissant un JPanel gérant la modification et la création d'une question
+ * @author BourdonQuizz
+ */
 public class GestQuestion extends JPanel
 {
 	private JLabel titre;
@@ -55,8 +59,8 @@ public class GestQuestion extends JPanel
 	private ArrayList<JTextField> props = new ArrayList<JTextField>();
 	private ArrayList<JCheckBox> propsCheck = new ArrayList<JCheckBox>();
 
-	ArrayList<String> enoncesPropAvantModif;
-	int nbQuestionsModifBase;
+	private ArrayList<String> enoncesPropAvantModif;
+	private int nbQuestionsModifBase;
 	private Dimension areaPreferredSize;
 	private Dimension textPreferredSize;
 	private int idQModification;
@@ -64,11 +68,18 @@ public class GestQuestion extends JPanel
 	private boolean isErrorDisplayed = false;
 	private boolean isUploaded = false;
 	
+	/**
+	 * Constructeur initialisant l'interface graphique
+	 */
 	public GestQuestion()
 	{
 		initGUI();
 	}
 
+	/**
+	 * Méthode initialisant l'interface graphique de modification d'une question
+	 * @param idQ identifiant de la question concernée
+	 */
 	public GestQuestion(int idQ)
 	{
 		initGUI();
@@ -110,6 +121,9 @@ public class GestQuestion extends JPanel
 		isUploaded = true;
 	}
 
+	/**
+	 * Méthode initialisant l'interface graphique pour la création d'une question
+	 */
 	private void initGUI()
 	{
 		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
@@ -170,6 +184,9 @@ public class GestQuestion extends JPanel
 		addMouseListener(new CustomMouseListener());
 	}
 
+	/**
+	 * Méthode permettant d'ajouter une nouvelle proposition vide
+	 */
 	public void ajouterProposition()
 	{
 		String[] lettresProp = { "B", "C", "D" };
@@ -204,6 +221,10 @@ public class GestQuestion extends JPanel
 		}
 	}
 
+	/**
+	 * Méthode permettant d'ajouter une proposition avec du texte
+	 * @param txt énoncé de la proposition
+	 */
 	private void ajouterProposition(String txt)
 	{
 		if(props.size() <= 3)
@@ -235,12 +256,18 @@ public class GestQuestion extends JPanel
 		}
 	}
 
+	/**
+	 * Méthode permettant de fixer une taille pour les JTextArea
+	 */
 	private void setAreaCustomPreferedSize()
 	{
 		libelle.setPreferredSize(areaPreferredSize);
 		corrige.setPreferredSize(areaPreferredSize);
 	}
 
+	/**
+	 * Méthode permettant d'initialiser les écouteurs de tous les composants
+	 */
 	private void initListeners()
 	{
 		for(Component c : getComponents())
@@ -263,6 +290,10 @@ public class GestQuestion extends JPanel
 		corrige.addFocusListener(new CustomFocusListener());
 	}
 
+	/**
+	 * Méthode permettant de vérifier que les propositions ont bien été rempli
+	 * @return true si toutes les propositions ont été remplies, sinon false
+	 */
 	private boolean validPropositions()
 	{
 		boolean res = true;
@@ -277,6 +308,9 @@ public class GestQuestion extends JPanel
 		return res;
 	}
 
+	/**
+	 * Méthode affichant une erreur si une image n'est pas choisie et/ou si au moins 2 propositions ne sont pas renseignées
+	 */
 	private void displayError()
 	{
 		if(!isErrorDisplayed)
@@ -293,6 +327,11 @@ public class GestQuestion extends JPanel
 		}
 	}
 
+	/**
+	 * Méthode permettant d'uploader une image sur le serveur via une requête HTTP
+	 * @param f objet File désignant le fichier à uploader
+	 * @param idQ identifiant de la question concernée
+	 */
 	private void sendPostImage(File f, int idQ)
 	{
 		CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -315,8 +354,15 @@ public class GestQuestion extends JPanel
 	}
 
 	// Gestionnaires d'évènements
-	private class CustomFocusListener extends FocusAdapter
+	/**
+	 * Classe interne définissant un écouteur d'évènements de focus
+	 * @author BourdonQuizz
+	 */
+	private final class CustomFocusListener extends FocusAdapter
 	{
+		/**
+		 * Méthode déclenchée lorsqu'un composant prend le focus
+		 */
 		public void focusGained(FocusEvent e)
 		{
 			if(e.getSource() instanceof JTextArea)
@@ -353,6 +399,9 @@ public class GestQuestion extends JPanel
 			}
 		}
 
+		/**
+		 * Méthode déclenchée lorsqu'un composant perd le focus
+		 */
 		public void focusLost(FocusEvent e)
 		{
 			if(e.getSource() instanceof JTextArea)
@@ -393,8 +442,15 @@ public class GestQuestion extends JPanel
 		}
 	}
 
-	private class CustomMouseListener extends MouseAdapter
+	/**
+	 * Classe interne définissant un écouteur d'évènements de souris
+	 * @author BourdonQuizz
+	 */
+	private final class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lors d'un clic sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			if(e.getSource() instanceof JButton)

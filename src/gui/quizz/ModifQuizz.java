@@ -22,6 +22,10 @@ import gui.MenuChoix;
 import main.MainFrame;
 import metier.Question;
 
+/**
+ * Classe définissant un JPanel permettant de modifier un quizz existant
+ * @author BourdonQuizz
+ */
 public class ModifQuizz extends JPanel
 {
 	private int idQuizz;
@@ -30,12 +34,19 @@ public class ModifQuizz extends JPanel
 	private Choice qDispo;
 	private Choice qSupprimables;
 	
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 * @param idQuizz identifiant du quizz à modifier
+	 */
 	public ModifQuizz(int idQuizz)
 	{
 		this.idQuizz = idQuizz;
 		initGUI();
 	}
 	
+	/**
+	 * Méthode initialisant l'interface graphique
+	 */
 	public void initGUI()
 	{
 		QuestionDAO qDao = DAOFactory.getInstance().getQuestion();
@@ -96,6 +107,9 @@ public class ModifQuizz extends JPanel
 		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
 	}
 	
+	/**
+	 * Méthode appliquant les changements apportés au JPanel
+	 */
 	private void applyChangesToPanel()
 	{
 		revalidate();
@@ -103,8 +117,15 @@ public class ModifQuizz extends JPanel
 	}
 	
 	// Gestionnaire d'évènements
-	private class CustomMouseListener extends MouseAdapter
+	/**
+	 * Classe interne définissant un écouteur d'évènements souris
+	 * @author BourdonQuizz
+	 */
+	private final class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lors d'un clic sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			switch(((JButton)e.getSource()).getText())

@@ -9,17 +9,27 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe définissant un JPanel permettant d'obtenir les noms des créateurs du programme
+ * @author BourdonQuizz
+ */
 public class InfosCreateurs extends JFrame
 {
-	private String[] developpers = {"Gabriel Fruhauf", "Lilian Lefort", "Maxime Salvat"};
+	private final String[] developpers = {"Gabriel Fruhauf", "Lilian Lefort", "Maxime Salvat"};
 	
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 */
 	public InfosCreateurs()
 	{
 		super("A propos");
-		init();
+		initGUI();
 	}
 	
-	private void init()
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique en affichant notamment les noms des créateurs
+	 */
+	private void initGUI()
 	{
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

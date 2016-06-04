@@ -31,6 +31,10 @@ import metier.Proposition;
 import metier.Question;
 import metier.Tentative;
 
+/**
+ * Classe définissant un JPanel permettant de faire un quizz en tant que membre
+ * @author BourdonQuizz
+ */
 public class JouerQuizz extends JPanel
 {
 	private final static String URL = DAOFactory.weburl + "/img/";
@@ -45,6 +49,10 @@ public class JouerQuizz extends JPanel
 	private int idQuizz;	
 	private int idTentative;
 	
+	/**
+	 * Constructeur permettant de faire un quizz spécifique
+	 * @param idQuizz identifiant du quizz concerné
+	 */
 	public JouerQuizz(int idQuizz)
 	{
 		this.idQuizz = idQuizz;
@@ -52,6 +60,9 @@ public class JouerQuizz extends JPanel
 		initGUI();
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique
+	 */
 	private void initGUI()
 	{
 		removeAll();
@@ -104,6 +115,10 @@ public class JouerQuizz extends JPanel
 		setBorder(BorderFactory.createEmptyBorder(5, 100, 5, 100));
 	}
 	
+	/**
+	 * Méthode permettant de générer les propositions du quizz
+	 * @return un objet JPanel contenant toutes les propositions
+	 */
 	private JPanel genPropPanel()
 	{
 		JPanel layoutProp = new JPanel();
@@ -131,6 +146,10 @@ public class JouerQuizz extends JPanel
 		return layoutProp;
 	}
 	
+	/**
+	 * Méthode permettant d'égaliser la taille des boutons des différentes propositions
+	 * @param layout
+	 */
 	private void equalizeButtonsSize(JPanel layout)
 	{
 		Dimension dim = null;
@@ -150,6 +169,10 @@ public class JouerQuizz extends JPanel
 		}
 	}
 	
+	/**
+	 * Méthode initialisant les écouteurs des composants d'un objet Container
+	 * @param cont objet Container contenant les composants à initialiser
+	 */
 	private void initMouseListeners(Container cont)
 	{
 		for(Component c : cont.getComponents())
@@ -159,18 +182,31 @@ public class JouerQuizz extends JPanel
 		}
 	}
 	
+	/**
+	 * Méthode permettant de remplacer un composant par un autre
+	 * @param cont objet Container contenant le composant à remplacer
+	 * @param c nouveau composant qui remplacera l'ancien
+	 * @param gbc contraintes GridBagLayout du nouveau composant
+	 * @param order ordre du composant à remplacer dans l'objet Container
+	 */
 	private void changeComponent(Container cont, Component c,GridBagConstraints gbc, int order)
 	{
 		cont.remove(cont.getComponent(order));
 		cont.add(c, gbc);
 	}
 	
+	/**
+	 * Méthode appliquant les changements apportés au JPanel
+	 */
 	private void applyChanges()
 	{
 		revalidate();
 		repaint();
 	}
 	
+	/**
+	 * Méthode permettant de corriger les réponses de la question actuelle du quizz
+	 */
 	private void correctAnswers()
 	{	
 		DAOFactory dao = DAOFactory.getInstance();
@@ -288,8 +324,15 @@ public class JouerQuizz extends JPanel
 	}
 	
 	// Gestionnaire d'évènements
-	private class CustomMouseListener extends MouseAdapter
+	/**
+	 * Classe interne définissant l'écouteur d'évènements souris
+	 * @author BourdonQuizz
+	 */
+	private final class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lors du clic sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			if(e.getSource() instanceof JButton)

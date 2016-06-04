@@ -26,6 +26,10 @@ import dao.DAOFactory;
 import dao.JoueurDAO;
 import main.MainFrame;
 
+/**
+ * Classe désignant le JPanel permettant de s'inscrire
+ * @author BourdonQuizz
+ */
 public class Inscription extends JPanel
 {
 	private JTextField nom;
@@ -40,11 +44,17 @@ public class Inscription extends JPanel
 
 	private HashMap<String, JTextField> components = new HashMap<String, JTextField>();
 
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 */
 	public Inscription()
 	{
 		initGUI();
 	}
 
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique
+	 */
 	private void initGUI()
 	{
 		setLayout(new GridBagLayout());
@@ -111,6 +121,9 @@ public class Inscription extends JPanel
 		});
 	}
 
+	/**
+	 * Méthode permettant d'initialiser les différents paramètres des composants
+	 */
 	public void initFields()
 	{
 		for (Component c : this.getComponents())
@@ -130,6 +143,9 @@ public class Inscription extends JPanel
 		}
 	}
 
+	/**
+	 * Méthode permettant d'afficher une erreur lorsque les champs ne sont pas correctement remplis
+	 */
 	public void displayError()
 	{
 		if (!displayErr)
@@ -147,8 +163,15 @@ public class Inscription extends JPanel
 	}
 
 	// Gestionnaires d'évènements
+	/**
+	 * Classe interne gérant l'écouteur d'évènements de souris
+	 * @author BourdonQuizz
+	 */
 	private class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lorsqu'on clique sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			if (e.getSource() == valider)
@@ -184,10 +207,17 @@ public class Inscription extends JPanel
 		}
 	}
 
-	private class CustomFocusListener extends FocusAdapter
+	/**
+	 * Classe interne gérant l'écouteur d'évènements de focus
+	 * @author BourdonQuizz
+	 */
+	private final class CustomFocusListener extends FocusAdapter
 	{
 		private String valeur;
 
+		/**
+		 * Méthode se déclenchant lorsqu'un composant gagne le focus
+		 */
 		public void focusGained(FocusEvent e)
 		{
 			if (components.containsValue((JTextField) e.getSource()))
@@ -210,6 +240,9 @@ public class Inscription extends JPanel
 			}
 		}
 
+		/**
+		 * Méthode se déclenchant lorsqu'un composant perd le focus
+		 */
 		public void focusLost(FocusEvent e)
 		{
 			JTextField j = (JTextField) e.getSource();

@@ -1,12 +1,10 @@
 package gui.accueil;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -23,12 +21,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.text.JTextComponent.KeyBinding;
 
 import dao.DAOFactory;
 import dao.JoueurDAO;
 import main.MainFrame;
 
+/**
+ * Classe désignant le JPanel permettant de se connecter en tant que membre ou administrateur
+ * @author BourdonQuizz
+ */
 public class Connexion extends JPanel
 {
 	private JTextField txtLogin;
@@ -37,36 +38,34 @@ public class Connexion extends JPanel
 	private JButton connexion;
 	private boolean displayErr = false;
 
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 */
 	public Connexion()
 	{
 		initGUI();
 	}
 
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique
+	 */
 	private void initGUI()
 	{
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[14];
-		gridBagLayout.rowHeights = new int[14];
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		setLayout(gridBagLayout);
-
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets.bottom = 5;
+		
 		JLabel lblPageDeConnexion = new JLabel("Page de connexion");
 		lblPageDeConnexion.setFont(new Font("Roboto", Font.PLAIN, 40));
-		GridBagConstraints gbc_lblPageDeConnexion = new GridBagConstraints();
-		gbc_lblPageDeConnexion.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPageDeConnexion.gridx = 4;
-		gbc_lblPageDeConnexion.gridy = 0;
-		add(lblPageDeConnexion, gbc_lblPageDeConnexion);
+		add(lblPageDeConnexion, gbc);
 
 		txtLogin = new JTextField();
 		txtLogin.setText("Login");
 		txtLogin.setForeground(Color.GRAY);
-		GridBagConstraints gbc_txtLogin = new GridBagConstraints();
-		gbc_txtLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_txtLogin.gridx = 4;
-		gbc_txtLogin.gridy = 3;
-		add(txtLogin, gbc_txtLogin);
+		gbc.gridy += 1;
+		add(txtLogin, gbc);
 		txtLogin.setColumns(10);
 		txtLogin.addFocusListener(new CustomFocusListener());
 		txtLogin.addKeyListener(new CustomKeyListener());
@@ -75,28 +74,22 @@ public class Connexion extends JPanel
 		txtMotDePasse.setEchoChar((char)0);
 		txtMotDePasse.setText("Mot de passe");
 		txtMotDePasse.setForeground(Color.GRAY);
-		GridBagConstraints gbc_txtMotDePasse = new GridBagConstraints();
-		gbc_txtMotDePasse.insets = new Insets(0, 0, 5, 5);
-		gbc_txtMotDePasse.gridx = 4;
-		gbc_txtMotDePasse.gridy = 4;
-		add(txtMotDePasse, gbc_txtMotDePasse);
+		gbc.gridy += 1;
+		add(txtMotDePasse, gbc);
 		txtMotDePasse.setColumns(10);
 		txtMotDePasse.addFocusListener(new CustomFocusListener());
 		txtMotDePasse.addKeyListener(new CustomKeyListener());
 
 		pasInscrit = new JButton("Pas encore inscrit ?");
-		GridBagConstraints gbc_pasInscrit = new GridBagConstraints();
-		gbc_pasInscrit.insets = new Insets(0, 0, 20, 5);
-		gbc_pasInscrit.gridx = 4;
-		gbc_pasInscrit.gridy = 9;
-		add(pasInscrit, gbc_pasInscrit);
+		gbc.insets.bottom = 20;
+		gbc.gridy += 1;
+		add(pasInscrit, gbc);
 		pasInscrit.addMouseListener(new CustomMouseListener());
 
 		connexion = new JButton("Valider");
-		GridBagConstraints gbc_seConnecter = new GridBagConstraints();
-		gbc_seConnecter.gridx = 4;
-		gbc_seConnecter.gridy = 12;
-		add(connexion, gbc_seConnecter);
+		gbc.insets.bottom = 0;
+		gbc.gridy += 1;
+		add(connexion, gbc);
 		connexion.addMouseListener(new CustomMouseListener());
 		connexion.addActionListener(new ActionListener()
 		{
@@ -107,7 +100,6 @@ public class Connexion extends JPanel
 		});
 		
 		setBorder(BorderFactory.createEmptyBorder(0,100,5,100));
-		
 		// Perte de focus
 		this.addMouseListener(new MouseAdapter()
 		{
@@ -119,6 +111,9 @@ public class Connexion extends JPanel
 		this.addKeyListener(new CustomKeyListener());
 	}
 	
+	/**
+	 * Méthode permettant d'afficher une erreur lorsque les identifiants sont erronés
+	 */
 	public void displayError()
 	{
 		if(!displayErr)
@@ -135,6 +130,9 @@ public class Connexion extends JPanel
 		}
 	}
 	
+	/**
+	 * Méthode permettant de se connecter et de changer d'interface graphique
+	 */
 	private void seConnecter()
 	{
 		DAOFactory f = DAOFactory.getInstance();
@@ -149,8 +147,15 @@ public class Connexion extends JPanel
 	}
 		
 	// Gestionnaires d'évènements
+	/**
+	 * Classe interne gérant l'écouteur d'évènements de souris
+	 * @author BourdonQuizz
+	 */
 	private class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode se déclenchant lorsqu'un composant a été cliqué
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			System.out.println("Entré !");
@@ -166,8 +171,15 @@ public class Connexion extends JPanel
 	}
 	
 	// Réinitialisation des champs
-	private class CustomFocusListener extends FocusAdapter
+	/**
+	 * Classe interne gérant l'écouteur d'évènements de focus
+	 * @author BourdonQuizz
+	 */
+	private final class CustomFocusListener extends FocusAdapter
 	{
+		/**
+		 * Méthode déclenchée lorsqu'un composant obtient le focus
+		 */
 		public void focusGained(FocusEvent e)
 		{
 			if(e.getSource() == txtLogin)
@@ -189,6 +201,9 @@ public class Connexion extends JPanel
 			}
 		}
 		
+		/**
+		 * Méthode déclenchée lorsqu'un composant perd le focus
+		 */
 		public void focusLost(FocusEvent e)
 		{
 			if(e.getSource() == txtLogin)
@@ -212,7 +227,11 @@ public class Connexion extends JPanel
 	}
 	
 	// Soumission du formulaire avec la touche entrée
-	private class CustomKeyListener extends KeyAdapter
+	/**
+	 * Classe interne gérant l'écouteur d'évènements clavier
+	 * @author BourdonQuizz
+	 */
+	private final class CustomKeyListener extends KeyAdapter
 	{
 		public void keyPressed(KeyEvent e)
 		{

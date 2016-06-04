@@ -24,6 +24,10 @@ import gui.MenuChoix;
 import main.MainFrame;
 import metier.Question;
 
+/**
+ * Classe définissant un JPanel permettant de créer un quizz
+ * @author BourdonQuizz
+ */
 public class CreationQuizz extends JPanel
 {
 	private Choice listeQDisponibles;
@@ -32,11 +36,17 @@ public class CreationQuizz extends JPanel
 	private JLabel messageConfirmation;
 	private boolean displayError = false;
 	
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 */
 	public CreationQuizz()
 	{
 		initGUI();
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique
+	 */
 	public void initGUI()
 	{
 		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
@@ -73,6 +83,9 @@ public class CreationQuizz extends JPanel
 		add(valider, gbc);
 	}
 	
+	/**
+	 * Méthode permettant d'appliquer les changements effectués sur le JPanel CreationQuizz
+	 */
 	private void applyChangesToPanel()
 	{
 		revalidate();
@@ -80,8 +93,15 @@ public class CreationQuizz extends JPanel
 	}
 	
 	// Gestionnaire d'évènements
-	private class CustomMouseListener extends MouseAdapter
+	/**
+	 * Classe interne définissant un écouteur d'évènements souris
+	 * @author BourdonQuizz
+	 */
+	private final class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lors d'un clic sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			switch(((JButton)e.getSource()).getText())

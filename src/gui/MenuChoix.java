@@ -22,6 +22,10 @@ import gui.quizz.CreationQuizz;
 import main.MainFrame;
 import metier.Joueur;
 
+/**
+ * Classe définissant un JPanel affichant le menu principal d'un administrateur ou d'un membre
+ * @author BourdonQuizz
+ */
 public class MenuChoix extends JPanel
 {
 	// Joueur connecté
@@ -34,17 +38,27 @@ public class MenuChoix extends JPanel
 	private JButton resultats;
 	private JButton jouerQuizz;
 	
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique et de mémoriser les informations d'un joueur
+	 * @param j objet Joueur désignant le joueur à sauvegarder en attribut
+	 */
 	public MenuChoix(Joueur j)
 	{
 		joueur = j;
 		initGUI();
 	}
 	
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 */
 	public MenuChoix()
 	{
 		initGUI();
 	}
 
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique
+	 */
 	private void initGUI()
 	{
 		setLayout(new GridBagLayout());
@@ -90,6 +104,9 @@ public class MenuChoix extends JPanel
 		setBorder(BorderFactory.createEmptyBorder(0, 100, 5, 100));
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser les différents écouteurs des composants
+	 */
 	private void initListeners()
 	{
 		for(Component c : getComponents())
@@ -99,8 +116,15 @@ public class MenuChoix extends JPanel
 		}
 	}
 	
-	private class CustomMouseListener extends MouseAdapter
+	/**
+	 * Classe interne définissant un écouteur d'évènements souris
+	 * @author BourdonQuizz
+	 */
+	private final class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lors d'un clic sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			JButton src = (JButton)e.getSource();

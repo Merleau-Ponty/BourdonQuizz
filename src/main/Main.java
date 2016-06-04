@@ -4,6 +4,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+/**
+ * Classe principal du programme, étant son unique point d'entrée
+ * @author BourdonQuizz
+ */
 public class Main
 {
 	/**

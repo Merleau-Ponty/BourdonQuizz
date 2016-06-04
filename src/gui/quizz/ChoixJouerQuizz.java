@@ -17,13 +17,23 @@ import javax.swing.SwingUtilities;
 import dao.DAOFactory;
 import main.MainFrame;
 
+/**
+ * Classe définissant un JPanel permettant de choisir le quizz qu'on veut faire
+ * @author BourdonQuizz
+ */
 public class ChoixJouerQuizz extends JPanel
 {
+	/**
+	 * Constructeur permettant d'initialiser l'interface graphique
+	 */
 	public ChoixJouerQuizz()
 	{
 		initGUI();
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser l'interface graphique
+	 */
 	private void initGUI()
 	{
 		setLayout(new GridBagLayout());
@@ -53,8 +63,15 @@ public class ChoixJouerQuizz extends JPanel
 	}
 	
 	// Gestionnaire d'évènements
-	private class CustomMouseListener extends MouseAdapter
+	/**
+	 * Classe interne définissant un écouteur d'évènements souris
+	 * @author BourdonQuizz
+	 */
+	private final class CustomMouseListener extends MouseAdapter
 	{
+		/**
+		 * Méthode déclenchée lors d'un clic sur un composant
+		 */
 		public void mouseClicked(MouseEvent e)
 		{
 			String s = ((JButton)e.getSource()).getText();
